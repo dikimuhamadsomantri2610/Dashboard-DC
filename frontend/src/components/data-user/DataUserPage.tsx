@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import {
     Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
-import { Plus, X, Pencil, Trash2 } from 'lucide-react';
+import { Plus, X, Pencil, Trash2, ShieldCheck } from 'lucide-react';
 
 
 
@@ -39,13 +39,18 @@ export default function DataUser() {
 
             {/* Header */}
             <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Data User</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Kelola dan perbarui data pengguna aplikasi.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 shadow-sm">
+                        <ShieldCheck className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Data User</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola dan perbarui data pengguna aplikasi.</p>
+                    </div>
                 </div>
                 <Button
                     onClick={() => setShowForm(prev => !prev)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
                 >
                     {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                     {showForm ? 'Tutup' : 'ADD'}

@@ -28,72 +28,80 @@ interface NavChild {
     name: string;
     href: string;
     icon: React.ElementType;
+    iconColor?: string;
 }
 interface NavItem {
     name: string;
     href: string;
     icon: React.ElementType;
+    iconColor?: string;
     children?: NavChild[];
 }
 
 // ─── Daftar menu ────────────────────────────────────────────────────────────
 const navigation: NavItem[] = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, iconColor: 'text-blue-500 dark:text-blue-400' },
     {
         name: 'Daily Work Print',
         href: '#',
         icon: Printer,
+        iconColor: 'text-violet-500 dark:text-violet-400',
         children: [
-            { name: 'Print Koli', href: '/daily-work-print/print-koli', icon: Printer },
-            { name: 'Print Register', href: '/daily-work-print/print-register', icon: FileText },
+            { name: 'Print Koli', href: '/daily-work-print/print-koli', icon: Printer, iconColor: 'text-violet-500 dark:text-violet-400' },
+            { name: 'Print Register', href: '/daily-work-print/print-register', icon: FileText, iconColor: 'text-violet-400 dark:text-violet-300' },
         ],
     },
     {
         name: 'Rekap Armada',
-        href: '#',  // route /rekap-armada dinonaktifkan — klik hanya toggle submenu
+        href: '#',
         icon: Truck,
+        iconColor: 'text-amber-500 dark:text-amber-400',
         children: [
-            { name: 'Surat Tugas', href: '/rekap-armada/surat-tugas', icon: FileSignature },
-            { name: 'Surat Tugas Fresh', href: '/rekap-armada/surat-tugas-fresh', icon: FileSignature },
-            { name: 'Update Toko', href: '/rekap-armada/update-toko', icon: Store },
-            { name: 'Update Armada', href: '/rekap-armada/update-armada', icon: Wrench },
-            { name: 'Report', href: '/rekap-armada/report', icon: BarChart2 },
+            { name: 'Surat Tugas', href: '/rekap-armada/surat-tugas', icon: FileSignature, iconColor: 'text-amber-500 dark:text-amber-400' },
+            { name: 'Surat Tugas Fresh', href: '/rekap-armada/surat-tugas-fresh', icon: FileSignature, iconColor: 'text-amber-400 dark:text-amber-300' },
+            { name: 'Update Toko', href: '/rekap-armada/update-toko', icon: Store, iconColor: 'text-orange-500 dark:text-orange-400' },
+            { name: 'Update Armada', href: '/rekap-armada/update-armada', icon: Wrench, iconColor: 'text-orange-400 dark:text-orange-300' },
+            { name: 'Report', href: '/rekap-armada/report', icon: BarChart2, iconColor: 'text-yellow-500 dark:text-yellow-400' },
         ],
     },
     {
         name: 'Presensi',
         href: '#',
         icon: ClipboardCheck,
+        iconColor: 'text-emerald-500 dark:text-emerald-400',
         children: [
-            { name: 'Report Presensi Kehadiran Karyawan', href: '/presensi/report', icon: FileText },
-            { name: 'Perubahan Jadwal', href: '/presensi/perubahan-jadwal', icon: CalendarDays },
-            { name: 'Kuota Jam Lebih', href: '/presensi/kuota-jam-lebih', icon: CalendarDays },
-            { name: 'Izin Keluar Jam Kerja', href: '/presensi/izin-keluar', icon: CalendarDays },
-            { name: 'Cuti/Izin', href: '/presensi/cuti-izin', icon: CalendarRange },
+            { name: 'Report Presensi Kehadiran Karyawan', href: '/presensi/report', icon: FileText, iconColor: 'text-emerald-500 dark:text-emerald-400' },
+            { name: 'Perubahan Jadwal', href: '/presensi/perubahan-jadwal', icon: CalendarDays, iconColor: 'text-emerald-400 dark:text-emerald-300' },
+            { name: 'Kuota Jam Lebih', href: '/presensi/kuota-jam-lebih', icon: CalendarDays, iconColor: 'text-teal-500 dark:text-teal-400' },
+            { name: 'Izin Keluar Jam Kerja', href: '/presensi/izin-keluar', icon: CalendarDays, iconColor: 'text-teal-400 dark:text-teal-300' },
+            { name: 'Cuti/Izin', href: '/presensi/cuti-izin', icon: CalendarRange, iconColor: 'text-green-500 dark:text-green-400' },
         ],
     },
     {
         name: 'Labeling',
         href: '#',
         icon: Tags,
+        iconColor: 'text-rose-500 dark:text-rose-400',
         children: [
-            { name: 'Label Lokasi Permanent', href: '/label/lokasi-permanent', icon: MapPin },
-            { name: 'Label After Pick', href: '/label/after-pick', icon: Box },
-            { name: 'Label After Pick Fresh', href: '/label/after-pick-fresh', icon: Box },
-            { name: 'Label Preprinted', href: '/label/preprinted', icon: Hash },
+            { name: 'Label Lokasi Permanent', href: '/label/lokasi-permanent', icon: MapPin, iconColor: 'text-rose-500 dark:text-rose-400' },
+            { name: 'Label After Pick', href: '/label/after-pick', icon: Box, iconColor: 'text-pink-500 dark:text-pink-400' },
+            { name: 'Label After Pick Fresh', href: '/label/after-pick-fresh', icon: Box, iconColor: 'text-pink-400 dark:text-pink-300' },
+            { name: 'Label Preprinted', href: '/label/preprinted', icon: Hash, iconColor: 'text-rose-400 dark:text-rose-300' },
         ],
     },
     {
         name: 'List Karyawan',
         href: '#',
         icon: Users,
+        iconColor: 'text-sky-500 dark:text-sky-400',
         children: [
-            { name: 'Receiving & Return', href: '/data-karyawan-receiving', icon: Users },
-            { name: 'Warehouse', href: '/data-karyawan-warehouse', icon: Users },
-            { name: 'Distribution & Delivery', href: '/data-karyawan-distribution', icon: Users },
+            { name: 'Receiving & Return', href: '/data-karyawan-receiving', icon: Users, iconColor: 'text-sky-500 dark:text-sky-400' },
+            { name: 'Warehouse', href: '/data-karyawan-warehouse', icon: Users, iconColor: 'text-cyan-500 dark:text-cyan-400' },
+            { name: 'Distribution & Delivery', href: '/data-karyawan-distribution', icon: Users, iconColor: 'text-blue-500 dark:text-blue-400' },
         ],
     },
 ];
+
 
 // ─── NavLinks ────────────────────────────────────────────────────────────────
 const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isSidebarOpen?: boolean }) => {
@@ -124,16 +132,13 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
                 if (item.children && item.children.length > 0) {
                     return (
                         <div key={item.name}>
-                            {/* Seluruh baris induk toggle submenu saat diklik */}
                             <div
                                 className={linkClass(!!isActive)}
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => toggleMenu(item.name)}
                             >
-                                <Icon className="h-5 w-5 shrink-0" />
+                                <Icon className={`h-5 w-5 shrink-0 ${item.iconColor ?? ''}`} />
                                 {isSidebarOpen && <span className="truncate flex-1">{item.name}</span>}
-
-                                {/* Chevron — indikator buka/tutup */}
                                 {isSidebarOpen && (
                                     isOpen
                                         ? <ChevronDown className="h-4 w-4 shrink-0" />
@@ -141,7 +146,6 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
                                 )}
                             </div>
 
-                            {/* Submenu — hanya tampil saat sidebar terbuka & di-toggle */}
                             {isSidebarOpen && isOpen && (
                                 <div className="ml-4 mt-1 space-y-1 border-l border-zinc-200 dark:border-zinc-700 pl-3">
                                     {item.children.map((child) => {
@@ -154,7 +158,7 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
                                                 onClick={onClick}
                                                 className={linkClass(childActive)}
                                             >
-                                                <ChildIcon className="h-4 w-4 shrink-0" />
+                                                <ChildIcon className={`h-4 w-4 shrink-0 ${child.iconColor ?? ''}`} />
                                                 <span className="truncate">{child.name}</span>
                                             </Link>
                                         );
@@ -174,7 +178,7 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
                         className={linkClass(location.pathname === item.href)}
                         title={!isSidebarOpen ? item.name : undefined}
                     >
-                        <Icon className="h-5 w-5 shrink-0" />
+                        <Icon className={`h-5 w-5 shrink-0 ${item.iconColor ?? ''}`} />
                         {isSidebarOpen && <span className="truncate">{item.name}</span>}
                     </Link>
                 );

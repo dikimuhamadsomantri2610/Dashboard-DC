@@ -36,11 +36,14 @@ export default function PerubahanJadwal() {
     return (
         <div className="space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight">Perubahan Jadwal</h2>
-                    <p className="text-muted-foreground">
-                        Kelola data pengajuan perubahan jadwal kerja karyawan.
-                    </p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400 shadow-sm">
+                        <CalendarDays className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Perubahan Jadwal</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola data pengajuan perubahan jadwal kerja karyawan.</p>
+                    </div>
                 </div>
             </div>
 

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, X, Pencil, Trash2 } from 'lucide-react';
+import { Plus, X, Pencil, Trash2, Store } from 'lucide-react';
 import { useUpdateToko } from './hooks/useUpdateToko';
 
 const FieldLabel = ({ children }: { children: React.ReactNode }) => (
@@ -20,9 +20,14 @@ export default function UpdateTokoPage() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Update Toko</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Kelola dan perbarui data toko armada.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400 shadow-sm">
+                        <Store className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Update Toko</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola dan perbarui data toko armada.</p>
+                    </div>
                 </div>
                 <Button onClick={() => setShowForm(prev => !prev)} className="flex items-center gap-2">
                     {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}

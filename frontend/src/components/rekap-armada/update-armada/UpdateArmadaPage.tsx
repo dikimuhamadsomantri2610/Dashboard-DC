@@ -28,9 +28,14 @@ export default function UpdateArmadaPage() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Update Armada</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Kelola dan perbarui data armada / kendaraan.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400 shadow-sm">
+                        <Wrench className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Update Armada</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola dan perbarui data armada / kendaraan.</p>
+                    </div>
                 </div>
                 <Button onClick={() => setShowForm(prev => !prev)} className="flex items-center gap-2">
                     {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}

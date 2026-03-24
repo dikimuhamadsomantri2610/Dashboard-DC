@@ -3,7 +3,7 @@ import { useProfileSetting } from './hooks/useProfileSetting';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { User, Lock, Save, ArrowLeft } from 'lucide-react';
+import { User, Lock, Save, ArrowLeft, UserCog } from 'lucide-react';
 
 const FieldLabel = ({ children }: { children: React.ReactNode }) => (
     <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
@@ -33,16 +33,20 @@ export default function ProfileSetting() {
                     variant="outline"
                     size="icon"
                     onClick={() => navigate(-1)}
-                    className="h-9 w-9"
+                    className="h-9 w-9 shrink-0"
                     title="Kembali"
                 >
                     <ArrowLeft className="h-4 w-4" />
                 </Button>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400 shadow-sm shrink-0">
+                    <UserCog className="h-6 w-6" />
+                </div>
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Pengaturan Profil</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Atur informasi akun pribadi Anda di sini.</p>
+                    <h2 className="text-2xl font-bold tracking-tight">Pengaturan Profil</h2>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">Atur informasi akun pribadi Anda di sini.</p>
                 </div>
             </div>
+
 
             <Card>
                 <CardHeader>

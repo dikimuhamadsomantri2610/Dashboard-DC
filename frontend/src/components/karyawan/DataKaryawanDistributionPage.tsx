@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Download, Pencil, Trash2, X } from 'lucide-react';
+import { Plus, Download, Pencil, Trash2, X, Truck } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { useKaryawan } from '@/context/KaryawanContext';
 
@@ -61,19 +61,22 @@ export default function DataKaryawanDistribution() {
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Data Karyawan Distribution &amp; Delivery</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Kelola data karyawan untuk bagian Distribution dan Delivery.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 shadow-sm">
+                        <Truck className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Data Karyawan Distribution & Delivery</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola data karyawan untuk bagian Distribution dan Delivery.</p>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    <Button
-                        onClick={handleOpenModal}
-                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white dark:bg-lime-500 dark:hover:bg-lime-600 dark:text-white"
-                    >
-                        <Plus className="h-4 w-4" />
-                        ADD
-                    </Button>
-                </div>
+                <Button
+                    onClick={handleOpenModal}
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
+                >
+                    <Plus className="h-4 w-4" />
+                    ADD
+                </Button>
             </div>
 
             {/* Modal */}

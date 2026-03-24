@@ -34,11 +34,14 @@ export default function CutiIzin() {
     return (
         <div className="space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight">Cuti & Izin</h2>
-                    <p className="text-muted-foreground">
-                        Kelola data pengajuan cuti dan izin karyawan.
-                    </p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400 shadow-sm">
+                        <CalendarRange className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Cuti & Izin</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola data pengajuan cuti dan izin karyawan.</p>
+                    </div>
                 </div>
             </div>
 

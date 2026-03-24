@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileText, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { FileText, Download, ChevronLeft, ChevronRight, ClipboardCheck } from 'lucide-react';
 import { useReportPresensi } from './hooks/useReportPresensi';
 
 export default function ReportPresensiPage() {
@@ -32,11 +32,17 @@ export default function ReportPresensiPage() {
     return (
         <div className="space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight">Report Presensi Kehadiran Karyawan</h2>
-                    <p className="text-muted-foreground">Laporan data presensi kehadiran karyawan terpusat.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400 shadow-sm">
+                        <ClipboardCheck className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Report Presensi Kehadiran Karyawan</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Laporan data presensi kehadiran karyawan terpusat.</p>
+                    </div>
                 </div>
             </div>
+
 
             <Card>
                 <CardHeader>
