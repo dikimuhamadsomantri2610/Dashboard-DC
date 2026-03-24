@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SuratTugas {
+  id               Int      @id @default(autoincrement())
+  no_armada        String   @db.VarChar(20)
+  dc               String   @db.VarChar(10)
+  nama_driver      String   @db.VarChar(50)
+  number_seal      String   @db.VarChar(15)
+  load_number      String   @db.VarChar(10)
+  inisial_toko     String   @default("") @db.VarChar(10)
+  jumlah_container Int
+  jumlah_koli      Int
+  materai          String   @db.VarChar(5)
+  kodeGembok       String   @db.VarChar(50)
+  keterangan       String   @default("R") @db.VarChar(5)
+  admin            String   @default("System") @db.VarChar(50)
+  createdAt        DateTime @default(now())
+  tanggalKirim     DateTime @default(now())
+}
+
+model SuratTugasFresh {
+  id           Int      @id @default(autoincrement())
+  no_armada    String   @db.VarChar(20)
+  dc           String   @db.VarChar(10)
+  nama_driver  String   @db.VarChar(50)
+  number_seal  String   @db.VarChar(15)
+  inisial_toko String   @default("") @db.VarChar(10)
+  jumlah_koli  Int
+  kodeGembok   String   @db.VarChar(50)
+  admin        String   @default("System") @db.VarChar(50)
+  createdAt    DateTime @default(now())
+  tanggalKirim DateTime @default(now())
+}
+
+model UpdateArmada {
+  id           Int      @id @default(autoincrement())
+  no_armada    String   @db.VarChar(20)
+  jenis_armada String   @db.VarChar(20)
+  nama_driver  String   @db.VarChar(50)
+  vendor       String   @db.VarChar(20)
+  status       String   @db.VarChar(6)
+  createdAt    DateTime @default(now())
+}
+
+model UpdateToko {
+  id           Int      @id @default(autoincrement())
+  site         String   @db.VarChar(5)
+  inisial_toko String   @db.VarChar(5)
+  nama_toko    String   @db.VarChar(25)
+  alamat_toko  String   @db.VarChar(50)
+  createdAt    DateTime @default(now())
+}
+
+model User {
+  id          Int    @id @default(autoincrement())
+  username    String @unique
+  password    String
+  namaLengkap String @default("User Baru")
+}
+
+model Karyawan {
+  id        Int      @id @default(autoincrement())
+  nama      String   @db.VarChar(100)
+  nik       String   @unique @db.VarChar(20)
+  divisi    String   @db.VarChar(50)
+  createdAt DateTime @default(now())
+}
+
+model Presensi {
+  id                 Int      @id @default(autoincrement())
+  nama               String   @db.VarChar(100)
+  nik                String   @db.VarChar(20)
+  divisi             String   @db.VarChar(50)
+  jamAbsenMasuk      String?  @db.VarChar(10)
+  jamAbsenPulang     String?  @db.VarChar(10)
+  jamIstirahatKeluar String?  @db.VarChar(10)
+  jamBeresIstirahat  String?  @db.VarChar(10)
+  createdAt          DateTime @default(now())
+}
+
+model PerubahanJadwal {
+  id           Int      @id @default(autoincrement())
+  nama         String   @db.VarChar(100)
+  nik          String   @db.VarChar(20)
+  divisi       String   @db.VarChar(50)
+  tanggal      DateTime @db.Date
+  jamAsal      String   @db.VarChar(10)
+  jamPerubahan String   @db.VarChar(10)
+  createdAt    DateTime @default(now())
+}
+
+model KuotaJamLebih {
+  id        Int      @id @default(autoincrement())
+  nama      String   @db.VarChar(100)
+  nik       String   @db.VarChar(20)
+  divisi    String   @db.VarChar(50)
+  tanggal   DateTime @db.Date
+  totalJam  Int
+  createdAt DateTime @default(now())
+}
+
+model KeluarJamKerja {
+  id         Int      @id @default(autoincrement())
+  nama       String   @db.VarChar(100)
+  nik        String   @db.VarChar(20)
+  divisi     String   @db.VarChar(50)
+  tanggal    DateTime @db.Date
+  jamKeluar  String   @db.VarChar(10)
+  jamKembali String?  @db.VarChar(10)
+  createdAt  DateTime @default(now())
+}
+
+model Cuti {
+  id               Int      @id @default(autoincrement())
+  nama             String   @db.VarChar(100)
+  nik              String   @db.VarChar(20)
+  divisi           String   @db.VarChar(50)
+  tanggalCutiAwal  DateTime @db.Date
+  tanggalCutiAkhir DateTime @db.Date
+  createdAt        DateTime @default(now())
+}
