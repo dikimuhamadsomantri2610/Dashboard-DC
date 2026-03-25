@@ -16,7 +16,9 @@ async function main() {
         create: {
             username: 'admin',
             password: hashedPassword,
-            namaLengkap: 'Administrator'
+            namaLengkap: 'Administrator',
+            role: 'admin',
+            inisial_dc: 'system'
         }
     });
 
