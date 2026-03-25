@@ -1,0 +1,23 @@
+import axios from 'axios';
+
+export const api = axios.create({ 
+    baseURL: import.meta.env.VITE_API_BASE_URL || '/api' 
+});
+
+export async function checkNik(nik: string) {
+    return api.get(`/presensi/check-nik/${nik}`);
+}
+
+export async function getServerTime(): Promise<string> {
+    const res = await api.get('/presensi/time');
+    return res.data.serverTime as string;
+}
+
+export async function submitPresensi(
+    nik: string,
+    jenis: string,
+    waktu?: string,
+    extraData: Record<string, unknown> = {}
+) {
+    return api.post('/presensi', { nik, jenis, waktu, ...extraData });
+}
