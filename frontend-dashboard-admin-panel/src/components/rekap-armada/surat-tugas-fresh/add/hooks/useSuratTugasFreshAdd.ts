@@ -42,7 +42,7 @@ export const useSuratTugasFreshAdd = () => {
                 const resData = await fetchDistributionCenters();
                 setDcList(resData);
                 if (resData.length > 0 && !dc) {
-                    setDc(resData[0].inisial_dc);
+                    setDc(resData[0].inisialDc);
                 }
             } catch (error) {
                 console.error("Gagal mengambil data DC:", error);

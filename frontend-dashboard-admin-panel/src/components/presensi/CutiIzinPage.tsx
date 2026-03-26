@@ -12,8 +12,8 @@ interface CutiProps {
 }
 
 const initialPending: CutiProps[] = [
-    { id: 1, nik: '1001', nama: 'Budi Santoso', tanggal: '2026-03-20 s/d 2026-03-22' },
-    { id: 2, nik: '1002', nama: 'Siti Aminah', tanggal: '2026-03-18' },
+    { id: 1, nik: '100000001', nama: 'Diki M. Somantri', tanggal: '2026-03-20 s/d 2026-03-22' },
+    { id: 2, nik: '100000002', nama: 'Asep Yuwana', tanggal: '2026-03-18' },
 ];
 
 export default function CutiIzin() {

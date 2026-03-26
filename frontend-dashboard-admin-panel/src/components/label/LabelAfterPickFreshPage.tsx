@@ -10,9 +10,9 @@ import { useAuth } from "@/hooks/useAuth";
 interface TokoItem {
   id: number;
   site: string;
-  inisial_toko: string;
-  nama_toko: string;
-  alamat_toko: string;
+  inisialToko: string;
+  namaToko: string;
+  alamatToko: string;
 }
 
 export default function LabelAfterPickFresh() {
@@ -160,7 +160,7 @@ export default function LabelAfterPickFresh() {
                   <option value="" disabled>-- Pilih Toko --</option>
                   {tokoList.map((t) => (
                     <option key={t.id} value={t.id}>
-                      {t.inisial_toko} - {t.nama_toko}
+                      {t.inisialToko} - {t.namaToko}
                     </option>
                   ))}
                 </select>
@@ -223,7 +223,7 @@ export default function LabelAfterPickFresh() {
               <div style={{ marginTop: "1vh", marginBottom: "1vh" }}>
                 <p style={{ fontSize: "3vw", marginBottom: "2vh", textTransform: "uppercase" }}>Ship to :</p>
                 <h2 style={{ fontSize: "4.5vw", fontWeight: "900", letterSpacing: "-0.2vw", marginBottom: "1vh", lineHeight: "1" }}>
-                  YM {selectedToko.inisial_toko} - {selectedToko.site}
+                  YM {selectedToko.inisialToko} - {selectedToko.site}
                 </h2>
                 <h3
                   style={{
@@ -235,7 +235,7 @@ export default function LabelAfterPickFresh() {
                     textOverflow: "ellipsis",
                     lineHeight: "1"
                   }}
-                > YOMART {selectedToko.nama_toko}
+                > YOMART {selectedToko.namaToko}
                 </h3>
               </div>
 

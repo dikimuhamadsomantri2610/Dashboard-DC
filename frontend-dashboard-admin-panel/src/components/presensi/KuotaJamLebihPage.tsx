@@ -14,8 +14,8 @@ interface KuotaProps {
 }
 
 const initialPending: KuotaProps[] = [
-    { id: 1, nik: '1001', nama: 'Budi Santoso', divisi: 'Receiving', jam: '2 Jam', tanggal: '2026-03-15' },
-    { id: 2, nik: '1002', nama: 'Siti Aminah', divisi: 'Warehouse', jam: '3 Jam', tanggal: '2026-03-16' },
+    { id: 1, nik: '100000001', nama: 'Diki M. Somantri', divisi: 'Receiving', jam: '2 Jam', tanggal: '2026-03-15' },
+    { id: 2, nik: '100000002', nama: 'Asep Yuwana', divisi: 'Warehouse', jam: '3 Jam', tanggal: '2026-03-16' },
 ];
 
 export default function KuotaJamLebih() {

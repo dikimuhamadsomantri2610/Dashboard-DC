@@ -15,8 +15,8 @@ interface JadwalProps {
 }
 
 const initialPending: JadwalProps[] = [
-    { id: 1, nik: '1001', nama: 'Budi Santoso', divisi: 'Warehouse', jam_keluar: '08:00 WIB', jam_kembali: '09:00 WIB', tanggal: '2026-03-15' },
-    { id: 2, nik: '1002', nama: 'Siti Aminah', divisi: 'Distribution', jam_keluar: '07:00 WIB', jam_kembali: '08:00 WIB', tanggal: '2026-03-16' },
+    { id: 1, nik: '100000001', nama: 'Diki M. Somantri', divisi: 'Warehouse', jam_keluar: '08:00 WIB', jam_kembali: '09:00 WIB', tanggal: '2026-03-15' },
+    { id: 2, nik: '100000002', nama: 'Asep Yuwana', divisi: 'Distribution', jam_keluar: '07:00 WIB', jam_kembali: '08:00 WIB', tanggal: '2026-03-16' },
 ];
 
 export default function IzinKeluar() {

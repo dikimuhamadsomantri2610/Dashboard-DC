@@ -57,8 +57,8 @@ export function SuratTugasFreshAddVehicleForm({
                             <option value="">Memuat data DC...</option>
                         ) : (
                             dcList.map((item: any) => (
-                                <option key={item.id} value={item.inisial_dc} className="bg-background text-foreground">
-                                    {item.inisial_dc} — {item.nama_dc}
+                                <option key={item.id} value={item.inisialDc} className="bg-background text-foreground">
+                                    {item.inisialDc} — {item.namaDc}
                                 </option>
                             ))
                         )}
