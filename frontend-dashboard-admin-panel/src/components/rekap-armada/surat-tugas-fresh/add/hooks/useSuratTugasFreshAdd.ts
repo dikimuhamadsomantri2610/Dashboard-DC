@@ -4,6 +4,19 @@ import { fetchSuratTugasFresh, deleteSuratTugasFresh, createSuratTugasFresh, fet
 import { fetchArmadaList } from '../../../surat-tugas/services/surat-tugas.service';
 import { toast } from 'sonner';
 import { type GembokFreshEntry, emptyFreshEntry } from '../types/surat-tugas-fresh-add.types';
+import type { SuratTugasFreshApiItem } from '../../types/surat-tugas-fresh.types';
+
+interface ArmadaItem {
+    id: number;
+    noArmada: string;
+    namaDriver: string;
+}
+
+interface DcItem {
+    id: number;
+    inisialDc: string;
+    namaDc: string;
+}
 
 export const useSuratTugasFreshAdd = () => {
     const navigate = useNavigate();
@@ -18,8 +31,8 @@ export const useSuratTugasFreshAdd = () => {
     const [entries, setEntries] = useState<GembokFreshEntry[]>([emptyFreshEntry()]);
     const [editItemIds, setEditItemIds] = useState<number[]>([]);
     
-    const [armadaList, setArmadaList] = useState<any[]>([]);
-    const [dcList, setDcList] = useState<any[]>([]);
+    const [armadaList, setArmadaList] = useState<ArmadaItem[]>([]);
+    const [dcList, setDcList] = useState<DcItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isFetchingEdit, setIsFetchingEdit] = useState(false);
 
@@ -58,9 +71,9 @@ export const useSuratTugasFreshAdd = () => {
         const fetchAndPopulate = async () => {
             setIsFetchingEdit(true);
             try {
-                const allItems: any[] = await fetchSuratTugasFresh();
+                const allItems = await fetchSuratTugasFresh() as SuratTugasFreshApiItem[];
 
-                const groupItems = allItems.filter((item: any) => {
+                const groupItems = allItems.filter((item) => {
                     const timeKey = new Date(item.createdAt).toISOString().slice(0, 16);
                     const itemGroupId = `${item.noArmada}-${item.namaDriver}-${timeKey}`;
                     return itemGroupId === groupId;
@@ -79,8 +92,8 @@ export const useSuratTugasFreshAdd = () => {
                     setTanggalKirim(new Date(groupItems[0].tanggalKirim).toISOString().split('T')[0]);
                 }
 
-                setEditItemIds(groupItems.map((i: any) => i.id));
-                const filledEntries: GembokFreshEntry[] = groupItems.map((item: any) => ({
+                setEditItemIds(groupItems.map((i) => i.id));
+                const filledEntries: GembokFreshEntry[] = groupItems.map((item) => ({
                     numberSeal: item.numberSeal || '',
                     inisialToko: item.inisialToko || '',
                     jumlahKoli: String(item.jumlahKoli ?? ''),
@@ -100,7 +113,7 @@ export const useSuratTugasFreshAdd = () => {
 
     const handleNoMobilChange = (value: string) => {
         setNoMobil(value);
-        const matchingArmada = armadaList.find(a => a.noMobil.toLowerCase() === value.toLowerCase());
+        const matchingArmada = armadaList.find(a => a.noArmada.toLowerCase() === value.toLowerCase());
         if (matchingArmada) {
             setNamaDriver(matchingArmada.namaDriver || '');
         }
@@ -155,9 +168,9 @@ export const useSuratTugasFreshAdd = () => {
                 description: isEditMode ? 'Data Surat Tugas Fresh armada berhasil diperbarui.' : 'Data Surat Tugas Fresh armada berhasil disimpan.'
             });
             navigate('/rekap-armada/surat-tugas-fresh');
-        } catch (error: any) {
+        } catch (error) {
             console.error('Submit Surat Tugas Fresh error:', error);
-            const msg = error.response?.data?.error || 'Terjadi kesalahan saat menyimpan data.';
+            const msg = error instanceof Error ? error.message : 'Terjadi kesalahan saat menyimpan data.';
             toast.error('Gagal Menyimpan', { description: msg });
         } finally {
             setIsLoading(false);

@@ -8,13 +8,25 @@ const FieldLabel = ({ children }: { children: React.ReactNode }) => (
     </label>
 );
 
+interface ArmadaItem {
+    id: number;
+    noArmada: string;
+    namaDriver: string;
+}
+
+interface DcItem {
+    id: number;
+    inisialDc: string;
+    namaDc: string;
+}
+
 interface VehicleFormProps {
     noMobil: string;
     handleNoMobilChange: (val: string) => void;
-    armadaList: any[];
+    armadaList: ArmadaItem[];
     dc: string;
     setDc: (val: string) => void;
-    dcList: any[];
+    dcList: DcItem[];
     namaDriver: string;
     setNamaDriver: (val: string) => void;
     tanggalKirim: string;
@@ -41,8 +53,8 @@ export function SuratTugasFreshAddVehicleForm({
                         required
                     />
                     <datalist id="armada-suggestions">
-                        {armadaList.map((a: any) => (
-                            <option key={a.id} value={a.noMobil} />
+                        {armadaList.map((a) => (
+                            <option key={a.id} value={a.noArmada} />
                         ))}
                     </datalist>
                 </div>
@@ -56,7 +68,7 @@ export function SuratTugasFreshAddVehicleForm({
                         {dcList.length === 0 ? (
                             <option value="">Memuat data DC...</option>
                         ) : (
-                            dcList.map((item: any) => (
+                            dcList.map((item) => (
                                 <option key={item.id} value={item.inisialDc} className="bg-background text-foreground">
                                     {item.inisialDc} — {item.namaDc}
                                 </option>

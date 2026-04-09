@@ -3,6 +3,19 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchArmadaList, fetchSuratTugas, deleteSuratTugas, createSuratTugas, fetchDistributionCenters } from '../../services/surat-tugas.service';
 import { toast } from 'sonner';
 import { type GembokEntry, emptyEntry } from '../types/surat-tugas-add.types';
+import type { SuratTugasApiItem } from '../../types/surat-tugas.types';
+
+interface ArmadaItem {
+    id: number;
+    noMobil: string;
+    namaDriver: string;
+}
+
+interface DcItem {
+    id: number;
+    inisialDc: string;
+    namaDc: string;
+}
 
 export const useSuratTugasAdd = () => {
     const navigate = useNavigate();
@@ -16,10 +29,10 @@ export const useSuratTugasAdd = () => {
     const [tanggalKirim, setTanggalKirim] = useState<string>(new Date().toISOString().split('T')[0]);
     const [entries, setEntries] = useState<GembokEntry[]>([emptyEntry()]);
     const [editItemIds, setEditItemIds] = useState<number[]>([]);
-    const [dcList, setDcList] = useState<any[]>([]);
+    const [dcList, setDcList] = useState<DcItem[]>([]);
     
     // State tambahan untuk saran Armada
-    const [armadaList, setArmadaList] = useState<any[]>([]);
+    const [armadaList, setArmadaList] = useState<ArmadaItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isFetchingEdit, setIsFetchingEdit] = useState(false);
 
@@ -60,9 +73,9 @@ export const useSuratTugasAdd = () => {
         const fetchAndPopulate = async () => {
             setIsFetchingEdit(true);
             try {
-                const allItems: any[] = await fetchSuratTugas();
+                const allItems = await fetchSuratTugas() as SuratTugasApiItem[];
 
-                const groupItems = allItems.filter((item: any) => {
+                const groupItems = allItems.filter((item) => {
                     const timeKey = new Date(item.createdAt).toISOString().slice(0, 16);
                     const itemGroupId = `${item.noArmada}-${item.namaDriver}-${timeKey}`;
                     return itemGroupId === groupId;
@@ -81,8 +94,8 @@ export const useSuratTugasAdd = () => {
                     setTanggalKirim(new Date(groupItems[0].tanggalKirim).toISOString().split('T')[0]);
                 }
 
-                setEditItemIds(groupItems.map((i: any) => i.id));
-                const filledEntries: GembokEntry[] = groupItems.map((item: any) => ({
+                setEditItemIds(groupItems.map((i) => i.id));
+                const filledEntries: GembokEntry[] = groupItems.map((item) => ({
                     numberSeal: item.numberSeal || '',
                     loadNumber: item.loadNumber || '',
                     inisialToko: item.inisialToko || '',
@@ -161,9 +174,9 @@ export const useSuratTugasAdd = () => {
                 description: isEditMode ? 'Data Surat Tugas armada berhasil diperbarui.' : 'Data Surat Tugas armada berhasil disimpan.'
             });
             navigate('/rekap-armada/surat-tugas');
-        } catch (error: any) {
+        } catch (error) {
             console.error('Submit Surat Tugas error:', error);
-            const msg = error.response?.data?.error || 'Terjadi kesalahan saat menyimpan data.';
+            const msg = error instanceof Error ? error.message : 'Terjadi kesalahan saat menyimpan data.';
             toast.error('Gagal Menyimpan', { description: msg });
         } finally {
             setIsLoading(false);
