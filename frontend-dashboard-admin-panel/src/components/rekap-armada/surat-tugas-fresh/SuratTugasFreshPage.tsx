@@ -42,7 +42,7 @@ export default function SuratTugasFreshPage() {
             <div className="print:hidden space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-3xl font-bold tracking-tight">Surat Tugas</h2>
+                        <h2 className="text-3xl font-bold tracking-tight">Surat Tugas Fresh</h2>
                         <p className="text-zinc-500 dark:text-zinc-400">Kelola surat tugas armada kendaraan.</p>
                     </div>
                     <div className="flex items-center gap-2">

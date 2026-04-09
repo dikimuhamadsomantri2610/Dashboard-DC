@@ -10,7 +10,7 @@ const FieldLabel = ({ children }: { children: React.ReactNode }) => (
 
 interface ArmadaItem {
     id: number;
-    noMobil: string;
+    noArmada: string;
     namaDriver: string;
 }
 
@@ -54,7 +54,7 @@ export function SuratTugasAddVehicleForm({
                     />
                     <datalist id="armada-suggestions">
                         {armadaList.map((a) => (
-                            <option key={a.id} value={a.noMobil} />
+                            <option key={a.id} value={a.noArmada} />
                         ))}
                     </datalist>
                 </div>

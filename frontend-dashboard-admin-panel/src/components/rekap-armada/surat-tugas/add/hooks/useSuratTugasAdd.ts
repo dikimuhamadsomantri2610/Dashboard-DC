@@ -7,7 +7,7 @@ import type { SuratTugasApiItem } from '../../types/surat-tugas.types';
 
 interface ArmadaItem {
     id: number;
-    noMobil: string;
+    noArmada: string;
     namaDriver: string;
 }
 
@@ -119,7 +119,7 @@ export const useSuratTugasAdd = () => {
 
     const handleNoMobilChange = (value: string) => {
         setNoMobil(value);
-        const matchingArmada = armadaList.find(a => a.noMobil.toLowerCase() === value.toLowerCase());
+        const matchingArmada = armadaList.find(a => a.noArmada.toLowerCase() === value.toLowerCase());
         if (matchingArmada) {
             setNamaDriver(matchingArmada.namaDriver || '');
         }
