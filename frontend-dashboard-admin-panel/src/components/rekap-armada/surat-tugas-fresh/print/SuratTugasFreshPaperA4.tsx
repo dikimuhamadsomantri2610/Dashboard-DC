@@ -1,43 +1,60 @@
-import type { GroupedSuratTugasFresh } from '../types/surat-tugas-fresh.types';
+import type { GroupedSuratTugasFresh, SuratTugasFreshApiItem } from '../types/surat-tugas-fresh.types';
 import { generateKodeGembok } from './utils/generateKodeGembok';
 import { SuratTugasFreshBarcode as BarcodeBox } from './components/SuratTugasFreshBarcode';
 
+const ITEMS_PER_PAGE = 13;
 
 interface SuratTugasFreshPaperA4Props {
     data: GroupedSuratTugasFresh & { printIndex?: number };
 }
 
-export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4Props) {
-    if (!data) return null;
+interface SinglePageProps {
+    data: GroupedSuratTugasFresh & { printIndex?: number };
+    pageItems: SuratTugasFreshApiItem[];
+    startIndex: number;
+    isLastPage: boolean;
+}
+
+function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePageProps) {
+    const dcName = data.items[0]?.dc || 'DC GBG';
+    let address = "";
+    let phone = "";
+
+    switch (dcName) {
+        case 'DC GBG':
+            address = "Jl. Soekarno-Hatta No.724, Kota Bandung, Jawa Barat 40295";
+            phone = "081519082630";
+            break;
+        case 'DC D53':
+            address = "Jl. Jakarta No.53, Kebonwaru, Kec. Batununggal, Kota Bandung, Jawa Barat 40272";
+            phone = "081234567890";
+            break;
+        case 'DC DRE':
+            address = "Jl. Ranca Ekek";
+            phone = "081222222222";
+            break;
+        case 'DC DMR':
+            address = "Jl. Mekar Raya No.kav 9A, Mekar Mulya, Kec. Panyileukan, Kota Bandung, Jawa Barat";
+            phone = "080987654321";
+            break;
+        default:
+            address = "Jl. Gedebage Selatan, Babakan Penghulu, Kec. Cinambo, Kota Bandung, Jawa Barat 40293";
+            phone = "081519082630";
+            break;
+    }
+
+    const emptyRowCount = Math.max(0, ITEMS_PER_PAGE - pageItems.length);
 
     return (
         <div
-            className="hidden print:flex print:flex-col print:w-full print:m-0 print:p-0 font-sans bg-white text-black print:absolute print:top-0 print:left-0"
-            style={{ width: '297mm', height: '210mm' }}
+            className="print:flex print:flex-col print:w-full print:m-0 print:p-0 font-sans bg-white text-black"
+            style={{ 
+                width: '297mm', 
+                height: '210mm',
+                pageBreakAfter: isLastPage ? 'auto' : 'always',
+                breakAfter: isLastPage ? 'auto' : 'page',
+            }}
         >
-            <style>
-                {`
-                     @media print {
-                        @page {
-                            size: A4 landscape;
-                            margin: 0;
-                        }
-                        html, body {
-                            margin: 0 !important;
-                            padding: 0 !important;
-                            width: 297mm;
-                            height: 210mm;
-                            overflow: hidden; /* Mencegah halaman kedua terprint */
-                            -webkit-print-color-adjust: exact !important;
-                            print-color-adjust: exact !important;
-                            background-color: white !important;
-                            color: black !important;
-                            color-scheme: light !important;
-                            -webkit-font-smoothing: auto !important;
-                        }
-                    }
-                `}
-            </style>
             <div className="print:px-4 print:pt-4 pb-0 flex flex-col h-full">
 
                 {/* Header Content */}
@@ -47,46 +64,14 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                         <img src="/src/assets/logo_yomart_detail.svg" alt="Yomart Logo" className="h-15 object-contain" />
                     </div>
                     <div className="text-center pt-4">
-                        <h1 className="text-[16px] font-bold tracking-wider mb-2">SURAT TUGAS PENGIRIMAN {data.items[0]?.dc || 'DC GBG'}</h1>
+                        <h1 className="text-[16px] font-bold tracking-wider mb-2">SURAT TUGAS PENGIRIMAN {dcName}</h1>
                     </div>
                 </div>
 
                 {/* Address Section */}
-                {(() => {
-                    const dcName = data.items[0]?.dc || 'DC GBG';
-                    let address = "";
-                    let phone = "";
+                <div className="text-[9px] font-normal mt-1">{address}</div>
+                <div className="text-[9px] font-normal mb-4">No. Telp : {phone}</div>
 
-                    switch (dcName) {
-                        case 'DC GBG':
-                            address = "Jl. Soekarno-Hatta No.724, Kota Bandung, Jawa Barat 40295";
-                            phone = "081519082630";
-                            break;
-                        case 'DC D53':
-                            address = "Jl. Jakarta No.53, Kebonwaru, Kec. Batununggal, Kota Bandung, Jawa Barat 40272";
-                            phone = "081234567890";
-                            break;
-                        case 'DC DRE':
-                            address = "Jl. Ranca Ekek";
-                            phone = "081222222222";
-                            break;
-                        case 'DC DMR':
-                            address = "Jl. Mekar Raya No.kav 9A, Mekar Mulya, Kec. Panyileukan, Kota Bandung, Jawa Barat";
-                            phone = "080987654321";
-                            break;
-                        default:
-                            address = "Jl. Gedebage Selatan, Babakan Penghulu, Kec. Cinambo, Kota Bandung, Jawa Barat 40293";
-                            phone = "081519082630";
-                            break;
-                    }
-
-                    return (
-                        <>
-                            <div className="text-[9px] font-normal mt-1">{address}</div>
-                            <div className="text-[9px] font-normal mb-4">No. Telp : {phone}</div>
-                        </>
-                    );
-                })()}
                 {/* Info Section */}
                 <div className="grid grid-cols-2 gap-x-12 px-2 text-[12px] mb-4">
                     <div className="space-y-1">
@@ -134,8 +119,6 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                             <span>:</span>
                             <span className="font-semibold uppercase truncate">{data.items[0]?.numberSeal || ''}</span>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -184,9 +167,9 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                     </thead>
 
                     <tbody>
-                        {data.items.map((item, idx) => (
+                        {pageItems.map((item, idx) => (
                             <tr key={item.id} className="h-[30px]">
-                                <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle">{idx + 1}</td>
+                                <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle">{startIndex + idx + 1}</td>
                                 <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle">{item.inisialToko}</td>
                                 <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle">{item.site}</td>
 
@@ -218,20 +201,19 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                         ))}
 
                         {/* EMPTY ROWS */}
-                        {data.items.length < 13 &&
-                            Array.from({ length: 13 - data.items.length }).map((_, idx) => (
-                                <tr key={`empty-${idx}`} className="h-[30px]">
-                                    {Array.from({ length: 13 }).map((__, i) => (
-                                        <td
-                                            key={i}
-                                            style={{ border: '1px solid #000' }}
-                                            className="px-0.5 align-middle text-transparent select-none"
-                                        >
-                                            -
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
+                        {Array.from({ length: emptyRowCount }).map((_, idx) => (
+                            <tr key={`empty-${idx}`} className="h-[30px]">
+                                {Array.from({ length: 12 }).map((__, i) => (
+                                    <td
+                                        key={i}
+                                        style={{ border: '1px solid #000' }}
+                                        className="px-0.5 align-middle text-transparent select-none"
+                                    >
+                                        -
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
 
@@ -290,6 +272,53 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                     </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4Props) {
+    if (!data) return null;
+
+    // Chunk items menjadi kelompok maks 13 per halaman
+    const chunks: SuratTugasFreshApiItem[][] = [];
+    for (let i = 0; i < data.items.length; i += ITEMS_PER_PAGE) {
+        chunks.push(data.items.slice(i, i + ITEMS_PER_PAGE));
+    }
+    // Jika tidak ada items, tetap render 1 halaman kosong
+    if (chunks.length === 0) chunks.push([]);
+
+    return (
+        <div className="hidden print:block print:w-full print:m-0 print:p-0 font-sans bg-white text-black print:absolute print:top-0 print:left-0 z-50">
+            <style>
+                {`
+                     @media print {
+                        @page {
+                            size: A4 landscape;
+                            margin: 0;
+                        }
+                        html, body {
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            -webkit-print-color-adjust: exact !important;
+                            print-color-adjust: exact !important;
+                            background-color: white !important;
+                            color: black !important;
+                            color-scheme: light !important;
+                            -webkit-font-smoothing: auto !important;
+                        }
+                    }
+                `}
+            </style>
+            
+            {chunks.map((pageItems, pageIdx) => (
+                <SingleA4Page
+                    key={pageIdx}
+                    data={data}
+                    pageItems={pageItems}
+                    startIndex={pageIdx * ITEMS_PER_PAGE}
+                    isLastPage={pageIdx === chunks.length - 1}
+                />
+            ))}
         </div>
     );
 }
