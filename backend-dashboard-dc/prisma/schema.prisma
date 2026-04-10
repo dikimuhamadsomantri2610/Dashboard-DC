@@ -52,7 +52,7 @@ model SuratTugasFresh {
 model UpdateArmada {
   id           Int      @id @default(autoincrement())
   noArmada    String   @db.VarChar(20)
-  jenisArmada String   @db.VarChar(20)
+  jenisArmada String   @db.VarChar(50)
   namaDriver  String   @db.VarChar(50)
   vendor       String   @db.VarChar(20)
   status       String   @db.VarChar(6)
