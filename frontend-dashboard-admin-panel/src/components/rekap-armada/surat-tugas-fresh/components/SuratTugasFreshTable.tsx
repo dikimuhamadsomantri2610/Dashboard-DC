@@ -34,6 +34,26 @@ export default function SuratTugasFreshTable({
         navigate(`/rekap-armada/surat-tugas-fresh/add?groupId=${encodeURIComponent(group.groupId)}`);
     };
 
+    // Hitung penomoran harian (reset ke 1 setiap beda hari)
+    // Berhubung sebelumnya numberingnya terbalik (yang terbaru/teratas bernilai paling tinggi),
+    // kita akan pertahankan logikanya: item teratas hari ini = N, terbawah hari ini = 1.
+    const dateTotals: Record<string, number> = {};
+    groupedDataFiltered.forEach(g => {
+        const dateKey = new Date(g.createdAt).toLocaleDateString('id-ID');
+        dateTotals[dateKey] = (dateTotals[dateKey] || 0) + 1;
+    });
+
+    const dateSeen: Record<string, number> = {};
+    const groupDailyNumbers: Record<string, number> = {};
+    
+    groupedDataFiltered.forEach(g => {
+        const dateKey = new Date(g.createdAt).toLocaleDateString('id-ID');
+        const total = dateTotals[dateKey];
+        const seen = dateSeen[dateKey] || 0;
+        groupDailyNumbers[g.groupId] = total - seen;
+        dateSeen[dateKey] = seen + 1;
+    });
+
     return (
         <CardContent className="px-4 pb-4 sm:px-6 sm:pb-6 pt-0 sm:pt-2 rounded-b-xl">
             <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
@@ -64,13 +84,12 @@ export default function SuratTugasFreshTable({
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            currentData.map((group, index) => {
-                                const globalIndex = (currentPage - 1) * perPage + index;
-                                const reverseNumber = groupedDataFiltered.length - globalIndex;
+                            currentData.map((group) => {
+                                const dailyNumber = groupDailyNumbers[group.groupId] || 1;
 
                                 return (
                                     <TableRow key={group.groupId}>
-                                        <TableCell className="text-center font-medium align-middle">{reverseNumber}</TableCell>
+                                        <TableCell className="text-center font-medium align-middle">{dailyNumber}</TableCell>
                                         <TableCell className="font-medium align-middle">
                                             <ul className="list-disc pl-4 space-y-1">
                                                 {group.items.map(toko => (
@@ -116,7 +135,7 @@ export default function SuratTugasFreshTable({
                                                     size="icon"
                                                     className="h-8 w-8 text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                                                     onClick={() => {
-                                                        setGroupToConfirmPrint({ group, index: reverseNumber });
+                                                        setGroupToConfirmPrint({ group, index: dailyNumber });
                                                     }}
                                                     title="Print"
                                                 >

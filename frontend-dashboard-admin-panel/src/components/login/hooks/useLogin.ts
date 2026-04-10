@@ -21,9 +21,10 @@ export const useLogin = () => {
             login(response.token);
             toast.success('Login Berhasil', { description: 'Selamat datang kembali!' });
             navigate('/dashboard', { replace: true });
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string } } };
             toast.error('Login Gagal', {
-                description: error.response?.data?.message || 'Terjadi kesalahan sistem',
+                description: err.response?.data?.message || 'Terjadi kesalahan sistem',
             });
         } finally {
             setIsLoading(false);

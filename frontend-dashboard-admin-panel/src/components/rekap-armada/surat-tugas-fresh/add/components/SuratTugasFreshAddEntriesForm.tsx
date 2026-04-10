@@ -21,7 +21,7 @@ interface EntriesFormProps {
 export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, updateEntry }: EntriesFormProps) {
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="sticky top-0 sm:-top-6 z-20 bg-card/95 backdrop-blur border-b shadow-sm mb-4">
                 <div className="flex items-center justify-between">
                     <CardTitle>Detail Muatan Armada</CardTitle>
                     <Button type="button" size="sm" onClick={addEntry} className="flex items-center gap-1">

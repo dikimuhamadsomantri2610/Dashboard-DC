@@ -2,6 +2,8 @@ import type { GroupedSuratTugasFresh, SuratTugasFreshApiItem } from '../types/su
 import { generateKodeGembok } from './utils/generateKodeGembok';
 import { SuratTugasFreshBarcode as BarcodeBox } from './components/SuratTugasFreshBarcode';
 
+// Konstanta ini menentukan batas maksimal baris/toko yang akan dicetak di satu halaman A4.
+// Jika melebihi 13, sisa data akan dicetak di halaman berikutnya.
 const ITEMS_PER_PAGE = 13;
 
 interface SuratTugasFreshPaperA4Props {
@@ -15,7 +17,11 @@ interface SinglePageProps {
     isLastPage: boolean;
 }
 
+// Komponen SingleA4Page bertugas untuk merender satu halaman fisik A4 ketika dicetak.
+// Menerima data 13 baris toko (atau kurang), dan properti isLastPage untuk menentukan jeda halaman (page break).
 function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePageProps) {
+    // Menentukan nama, alamat, dan nomor telepon berdasarkan nama DC (Distribution Center).
+    // Jika tidak ada data item, maka default-nya menggunakan 'DC GBG'.
     const dcName = data.items[0]?.dc || 'DC GBG';
     let address = "";
     let phone = "";
@@ -43,16 +49,22 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
             break;
     }
 
+    // Menghitung berapa baris kosong yang harus dirender.
+    // Hal ini guna memastikan ukuran tabel tetap statis dan mengisi penuh halaman 
+    // meski jumlah toko yang masuk pada satu halaman itu kurang dari ITEMS_PER_PAGE.
     const emptyRowCount = Math.max(0, ITEMS_PER_PAGE - pageItems.length);
 
     return (
         <div
-            className="print:flex print:flex-col print:w-full print:m-0 print:p-0 font-sans bg-white text-black"
+            className="print:flex print:flex-col print:w-full print:m-0 print:p-0 font-sans bg-white text-black overflow-hidden box-border"
             style={{ 
-                width: '297mm', 
-                height: '210mm',
-                pageBreakAfter: isLastPage ? 'auto' : 'always',
-                breakAfter: isLastPage ? 'auto' : 'page',
+                // Spesifikasi ukuran standar A4 secara Landscape.
+                width: '100%', 
+                height: '100vh', // Menggunakan 100vh agar tingginya pas seluas keras asli, tanpa tumpah
+                // Logika page-break: memaksa browser/printer untuk pindah ke halaman baru 
+                // setelah elemen ini, kecuali jika instruksi ini ada di halaman yang terakhir.
+                pageBreakAfter: isLastPage ? 'avoid' : 'always',
+                breakAfter: isLastPage ? 'avoid' : 'page',
             }}
         >
             <div className="print:px-4 print:pt-4 pb-0 flex flex-col h-full">
@@ -167,6 +179,7 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
                     </thead>
 
                     <tbody>
+                        {/* MULAI ITERASI DATA TOKO: Loop array item yang ditugaskan pada halaman spesifik ini */}
                         {pageItems.map((item, idx) => (
                             <tr key={item.id} className="h-[30px]">
                                 <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle">{startIndex + idx + 1}</td>
@@ -187,6 +200,7 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
                                 <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle"></td>
 
                                 <td style={{ border: '1px solid #000' }} className="px-0.5 align-middle">
+                                    {/* Memanggil komponen Barcode berdasarkan helper kombinasi gembok dan sandi toko */}
                                     <div className="flex items-center justify-center h-[20px] overflow-hidden">
                                         <BarcodeBox
                                             value={generateKodeGembok(item.kodeGembok, item.site) || ''}
@@ -200,7 +214,8 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
                             </tr>
                         ))}
 
-                        {/* EMPTY ROWS */}
+                        {/* ROW KOSONG KORUM: Sederetan row strip "-" untuk memenuhi sisa sel tabel.
+                            Sehingga tinggi grid dan garis kotak tabel tetap seimbang walau isinya kurang. */}
                         {Array.from({ length: emptyRowCount }).map((_, idx) => (
                             <tr key={`empty-${idx}`} className="h-[30px]">
                                 {Array.from({ length: 12 }).map((__, i) => (
@@ -218,6 +233,7 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
                 </table>
 
                 {/* Signatures & Additional Info Layout */}
+                {startIndex === 0 && (
                 <div className="relative flex flex-col mt-auto text-[10px] font-bold">
                     <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'start', gap: '8px', marginBottom: '20px' }}>
 
@@ -271,24 +287,34 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
                         </div>
                     </div>
                 </div>
+                )}
             </div>
         </div>
     );
 }
 
+
+// Komponen utama yang dipanggil via parent UI, tersembunyi selama mode layar layar karena memakai `hidden print:block`.
+// Komponen inilah yang akan dicetak oleh printer secara landscape menggunakan CSS pada bagian style di bawah.
 export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4Props) {
     if (!data) return null;
 
-    // Chunk items menjadi kelompok maks 13 per halaman
+    // Chunk items: Memecah semua daftar kunjungan toko menjadi bagian-bagian kecil per ITEMS_PER_PAGE.
+    // Misalnya ada 20 toko, maka chunks akan berisi 2 array: array pertama 13 item, array kedua 7 item.
     const chunks: SuratTugasFreshApiItem[][] = [];
     for (let i = 0; i < data.items.length; i += ITEMS_PER_PAGE) {
         chunks.push(data.items.slice(i, i + ITEMS_PER_PAGE));
     }
-    // Jika tidak ada items, tetap render 1 halaman kosong
+    // Jika surat tugas tidak memiliki items apapun (kasus langka), 
+    // kita setidaknya memberikan satu array kosong agar 1 halaman kosong tetap tercetak.
     if (chunks.length === 0) chunks.push([]);
 
     return (
         <div className="hidden print:block print:w-full print:m-0 print:p-0 font-sans bg-white text-black print:absolute print:top-0 print:left-0 z-50">
+            {/* CSS SETTINGS KHUSUS UNTUK PRINTING:
+                Menghapus margin bawaan browser, memaksakan warna tercetak akurat (print-color-adjust),
+                dan menetapkan orientasi kertas sebagai Landscape.
+            */}
             <style>
                 {`
                      @media print {
@@ -310,6 +336,9 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                 `}
             </style>
             
+            {/* LOOP HALAMAN: Merender ulang komponen `SingleA4Page` sebanyak jumlah sub-array (chunks).
+                Parameter startIndex memastikan penomoran dalam tabel diteruskan sesuai halamannya (misal lanjut dari 14 di halaman kedua).
+            */}
             {chunks.map((pageItems, pageIdx) => (
                 <SingleA4Page
                     key={pageIdx}
