@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { fetchSuratTugasFresh, deleteSuratTugasFresh } from '../services/surat-tugas-fresh.service';
+import { fetchSuratTugasFresh, deleteSuratTugasFresh, fetchDistributionCenters } from '../services/surat-tugas-fresh.service';
 import { toast } from 'sonner';
 import { exportSuratTugasToExcel } from '../utils/surat-tugas-fresh.utils';
 import type { SuratTugasFreshApiItem, GroupedSuratTugasFresh } from '../types/surat-tugas-fresh.types';
+import type { DistributionCenterData } from '../print/SuratTugasFreshPaperA4';
 
 export const useSuratTugasFresh = () => {
     const [data, setData] = useState<SuratTugasFreshApiItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [distributionCenters, setDistributionCenters] = useState<DistributionCenterData[]>([]);
     const [selectedGroupForPrint, setSelectedGroupForPrint] = useState<GroupedSuratTugasFresh & { printIndex?: number } | null>(null);
     const [groupToConfirmPrint, setGroupToConfirmPrint] = useState<{ group: GroupedSuratTugasFresh, index: number } | null>(null);
 
@@ -20,8 +22,12 @@ export const useSuratTugasFresh = () => {
     const fetchData = useCallback(async () => {
         setIsLoading(true);
         try {
-            const resData = await fetchSuratTugasFresh();
+            const [resData, dcs] = await Promise.all([
+                fetchSuratTugasFresh(),
+                fetchDistributionCenters()
+            ]);
             setData(resData);
+            setDistributionCenters(dcs);
         } catch (error) {
             console.error("Gagal mengambil data surat tugas:", error);
             toast.error('Gagal', { description: 'Gagal mengambil surat tugas.' });
@@ -86,7 +92,7 @@ export const useSuratTugasFresh = () => {
     const resetDateFilter = () => { setStartDate(''); setEndDate(''); setDcFilter('All'); };
 
     return {
-        data, isLoading,
+        data, isLoading, distributionCenters,
         selectedGroupForPrint, setSelectedGroupForPrint,
         groupToConfirmPrint, setGroupToConfirmPrint,
         startDate, setStartDate, endDate, setEndDate, dcFilter, setDcFilter,

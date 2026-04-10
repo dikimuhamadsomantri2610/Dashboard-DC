@@ -6,8 +6,18 @@ import { SuratTugasFreshBarcode as BarcodeBox } from './components/SuratTugasFre
 // Jika melebihi 13, sisa data akan dicetak di halaman berikutnya.
 const ITEMS_PER_PAGE = 13;
 
+export interface DistributionCenterData {
+    id: number;
+    site: string;
+    inisialDc: string;
+    namaDc: string;
+    alamatDc: string;
+    phoneNumber: string;
+}
+
 interface SuratTugasFreshPaperA4Props {
     data: GroupedSuratTugasFresh & { printIndex?: number };
+    distributionCenters?: DistributionCenterData[];
 }
 
 interface SinglePageProps {
@@ -15,39 +25,24 @@ interface SinglePageProps {
     pageItems: SuratTugasFreshApiItem[];
     startIndex: number;
     isLastPage: boolean;
+    distributionCenters?: DistributionCenterData[];
 }
 
 // Komponen SingleA4Page bertugas untuk merender satu halaman fisik A4 ketika dicetak.
 // Menerima data 13 baris toko (atau kurang), dan properti isLastPage untuk menentukan jeda halaman (page break).
-function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePageProps) {
+function SingleA4Page({ data, pageItems, startIndex, isLastPage, distributionCenters }: SinglePageProps) {
     // Menentukan nama, alamat, dan nomor telepon berdasarkan nama DC (Distribution Center).
-    // Jika tidak ada data item, maka default-nya menggunakan 'DC GBG'.
-    const dcName = data.items[0]?.dc || 'DC GBG';
-    let address = "";
-    let phone = "";
+    // Jika tidak ada data item, maka default-nya menggunakan 'DGC'.
+    const rawDcName = data.items[0]?.dc || 'DGC';
+    
+    // Cari DC yang cocok dengan site, inisialDc atau namaDc
+    const matchedDc = distributionCenters?.find(
+        (dc) => dc.namaDc === rawDcName || dc.inisialDc === rawDcName || dc.site === rawDcName || `DC ${dc.inisialDc}` === rawDcName
+    );
 
-    switch (dcName) {
-        case 'DC GBG':
-            address = "Jl. Soekarno-Hatta No.724, Kota Bandung, Jawa Barat 40295";
-            phone = "081519082630";
-            break;
-        case 'DC D53':
-            address = "Jl. Jakarta No.53, Kebonwaru, Kec. Batununggal, Kota Bandung, Jawa Barat 40272";
-            phone = "081234567890";
-            break;
-        case 'DC DRE':
-            address = "Jl. Ranca Ekek";
-            phone = "081222222222";
-            break;
-        case 'DC DMR':
-            address = "Jl. Mekar Raya No.kav 9A, Mekar Mulya, Kec. Panyileukan, Kota Bandung, Jawa Barat";
-            phone = "080987654321";
-            break;
-        default:
-            address = "Jl. Gedebage Selatan, Babakan Penghulu, Kec. Cinambo, Kota Bandung, Jawa Barat 40293";
-            phone = "081519082630";
-            break;
-    }
+    const dcName = matchedDc?.namaDc || rawDcName;
+    const address = matchedDc?.alamatDc || "Jl. Soekarno-Hatta No.236a, Kopo, Kec. Bojongloa Kaler, Kota Bandung, Jawa Barat 40233";
+    const phone = matchedDc?.phoneNumber || "08123456789";
 
     // Menghitung berapa baris kosong yang harus dirender.
     // Hal ini guna memastikan ukuran tabel tetap statis dan mengisi penuh halaman 
@@ -296,7 +291,7 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage }: SinglePagePro
 
 // Komponen utama yang dipanggil via parent UI, tersembunyi selama mode layar layar karena memakai `hidden print:block`.
 // Komponen inilah yang akan dicetak oleh printer secara landscape menggunakan CSS pada bagian style di bawah.
-export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4Props) {
+export default function SuratTugasFreshPaperA4({ data, distributionCenters }: SuratTugasFreshPaperA4Props) {
     if (!data) return null;
 
     // Chunk items: Memecah semua daftar kunjungan toko menjadi bagian-bagian kecil per ITEMS_PER_PAGE.
@@ -346,6 +341,7 @@ export default function SuratTugasFreshPaperA4({ data }: SuratTugasFreshPaperA4P
                     pageItems={pageItems}
                     startIndex={pageIdx * ITEMS_PER_PAGE}
                     isLastPage={pageIdx === chunks.length - 1}
+                    distributionCenters={distributionCenters}
                 />
             ))}
         </div>

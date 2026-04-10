@@ -12,6 +12,7 @@ export default function SuratTugasFreshPage() {
     const navigate = useNavigate();
     const {
         isLoading,
+        distributionCenters,
         selectedGroupForPrint,
         setSelectedGroupForPrint,
         groupToConfirmPrint,
@@ -91,7 +92,7 @@ export default function SuratTugasFreshPage() {
             />
 
             {/* Print Section (Hidden on screen, visible on print) */}
-            {selectedGroupForPrint && <SuratTugasFreshPaperA4 data={selectedGroupForPrint} />}
+            {selectedGroupForPrint && <SuratTugasFreshPaperA4 data={selectedGroupForPrint} distributionCenters={distributionCenters} />}
         </div>
     );
 }
