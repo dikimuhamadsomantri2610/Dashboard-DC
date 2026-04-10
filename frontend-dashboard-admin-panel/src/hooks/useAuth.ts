@@ -11,12 +11,12 @@ const decodeToken = (t: string | null) => {
 };
 
 export const useAuth = () => {
-    const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+    const [token, setToken] = useState<string | null>(sessionStorage.getItem('token'));
     const [user, setUser] = useState<{ id: number; username: string; namaLengkap?: string } | null>(null);
 
     useEffect(() => {
         const handleStorageChange = () => {
-            const currentToken = localStorage.getItem('token');
+            const currentToken = sessionStorage.getItem('token');
             setToken(currentToken);
             setUser(decodeToken(currentToken));
         };
@@ -26,7 +26,7 @@ export const useAuth = () => {
     }, []);
 
     const login = useCallback((newToken: string) => {
-        localStorage.setItem('token', newToken);
+        sessionStorage.setItem('token', newToken);
         setToken(newToken);
         setUser(decodeToken(newToken));
         // trigger storage event for the same window
@@ -34,7 +34,7 @@ export const useAuth = () => {
     }, []);
 
     const logout = useCallback(() => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         setToken(null);
         setUser(null);
         window.dispatchEvent(new Event('storage'));

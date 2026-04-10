@@ -299,7 +299,7 @@ export default function DashboardLayout() {
                                         </Avatar>
                                         <div className="flex flex-col space-y-1 overflow-hidden">
                                             <p className="text-sm font-medium leading-none truncate">
-                                                {(user as any)?.namaLengkap || 'Nama Lengkap'}
+                                                {(user as { namaLengkap?: string })?.namaLengkap || 'Nama Lengkap'}
                                             </p>
                                             <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">
                                                 @{user?.username || 'pengguna'}
