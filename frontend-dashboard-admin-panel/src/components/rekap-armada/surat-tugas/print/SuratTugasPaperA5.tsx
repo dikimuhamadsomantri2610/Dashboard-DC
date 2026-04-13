@@ -1,3 +1,4 @@
+"use client";
 import type { GroupedSuratTugas } from '../types/surat-tugas.types';
 import { generateKodeGembok } from '../utils/surat-tugas.utils';
 
@@ -39,7 +40,7 @@ export default function SuratTugasPaperA5({ selectedGroupForPrint }: SuratTugasP
             <div className="print:px-4 print:pt-4 pb-0">
                 <div className="relative flex justify-center items-center mb-4">
                     <div className="absolute left-0 top-0">
-                        <img src="/src/assets/logo_yomart_detail.svg" alt="Yomart Logo" className="h-15 object-contain" />
+                        <img src="/logo_yomart_detail.svg" alt="Yomart Logo" className="h-15 object-contain" />
                     </div>
                     <div className="text-center pt-4">
                         <h1 className="text-[16px] font-bold tracking-wider mb-2">SURAT TUGAS PENGIRIMAN {selectedGroupForPrint.items[0]?.dc || 'DC GBG'}</h1>

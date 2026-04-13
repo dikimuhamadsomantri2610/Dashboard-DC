@@ -1,5 +1,6 @@
+"use client";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useAuth } from '@/hooks/useAuth';
 import { loginUser } from '../services/login.service';
@@ -10,7 +11,7 @@ export const useLogin = () => {
     const [isLoading, setIsLoading] = useState(false);
     
     const { login } = useAuth();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,7 +21,7 @@ export const useLogin = () => {
             const response = await loginUser({ username, password });
             login(response.token);
             toast.success('Login Berhasil', { description: 'Selamat datang kembali!' });
-            navigate('/dashboard', { replace: true });
+            router.replace('/');
         } catch (error: unknown) {
             const err = error as { response?: { data?: { message?: string } } };
             toast.error('Login Gagal', {

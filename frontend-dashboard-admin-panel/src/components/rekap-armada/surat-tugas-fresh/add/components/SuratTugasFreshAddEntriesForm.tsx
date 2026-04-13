@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,9 +17,10 @@ interface EntriesFormProps {
     addEntry: () => void;
     removeEntry: (index: number) => void;
     updateEntry: (index: number, field: keyof GembokFreshEntry, value: string) => void;
+    tokoList?: { id: number; inisialToko: string; namaToko: string }[];
 }
 
-export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, updateEntry }: EntriesFormProps) {
+export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, updateEntry, tokoList = [] }: EntriesFormProps) {
     return (
         <Card>
             <CardHeader className="sticky top-0 sm:-top-6 z-20 bg-card/95 backdrop-blur border-b shadow-sm mb-4">
@@ -67,7 +69,15 @@ export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, 
                                     value={entry.inisialToko}
                                     onChange={e => updateEntry(index, 'inisialToko', e.target.value)}
                                     maxLength={3}
+                                    list={`toko-list-${index}`}
                                 />
+                                <datalist id={`toko-list-${index}`}>
+                                    {tokoList.map(toko => (
+                                        <option key={toko.id} value={toko.inisialToko}>
+                                            {toko.namaToko}
+                                        </option>
+                                    ))}
+                                </datalist>
                             </div>
                             <div className="space-y-2">
                                 <FieldLabel>Jumlah Koli</FieldLabel>

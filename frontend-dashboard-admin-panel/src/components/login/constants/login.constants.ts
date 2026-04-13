@@ -1,5 +1,6 @@
 import { Package, Truck, Boxes, BarChart3, ShoppingCart, Warehouse, ClipboardList, Layers, ArrowRightLeft, ScanLine } from 'lucide-react';
-import logoYomart from '@/assets/logo_yomart.svg';
+
+const logoYomart = '/logo_yomart.svg';
 
 export const BG_ICONS = [
     { Icon: Truck, size: 36, x: '5%', y: '10%', delay: '0s', dur: '14s', opacity: 0.12 },

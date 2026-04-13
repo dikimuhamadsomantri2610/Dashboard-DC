@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+"use client";
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Plus } from 'lucide-react';
@@ -9,7 +10,7 @@ import SuratTugasDialogs from './components/SuratTugasDialogs';
 import SuratTugasPaperA5 from './print/SuratTugasPaperA5';
 
 export default function SuratTugasPage() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const {
         isLoading,
         selectedGroupForPrint, setSelectedGroupForPrint,
@@ -38,7 +39,7 @@ export default function SuratTugasPage() {
                     </div>
                     <div className="flex items-center gap-2">
                         <Button
-                            onClick={() => navigate('/rekap-armada/surat-tugas/add')}
+                            onClick={() => router.push('/rekap-armada/surat-tugas/add')}
                             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white dark:bg-lime-500 dark:hover:bg-lime-600 dark:text-white"
                         >
                             <Plus className="h-4 w-4" />

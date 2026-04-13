@@ -1,9 +1,11 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import {
     fetchArmada, createArmada, updateArmada, deleteArmada,
     type ArmadaItem
 } from '../services/armada.service';
+import { fetchDistributionCenters } from '../../surat-tugas-fresh/services/surat-tugas-fresh.service';
 
 export const useUpdateArmada = () => {
     const [data, setData] = useState<ArmadaItem[]>([]);
@@ -15,7 +17,10 @@ export const useUpdateArmada = () => {
     const [jenisArmada, setJenisArmada] = useState('');
     const [namaDriver, setNamaDriver] = useState('');
     const [vendor, setVendor] = useState('');
+    const [inisialDc, setInisialDc] = useState('');
     const [status, setStatus] = useState('Aktif');
+
+    const [dcList, setDcList] = useState<{id: number, inisialDc: string, namaDc: string}[]>([]);
 
     const loadArmada = async () => {
         try {
@@ -26,11 +31,26 @@ export const useUpdateArmada = () => {
         }
     };
 
-    useEffect(() => { loadArmada(); }, []);
+    useEffect(() => { 
+        loadArmada(); 
+        const getDcList = async () => {
+            try {
+                const resData = await fetchDistributionCenters();
+                setDcList(resData);
+                if (resData.length > 0) {
+                    setInisialDc(resData[0].inisialDc);
+                }
+            } catch (error) {
+                console.error("Gagal memuat DC:", error);
+            }
+        };
+        getDcList();
+    }, []);
 
     const resetForm = () => {
         setNoMobil(''); setJenisArmada(''); setNamaDriver('');
-        setVendor(''); setStatus('Aktif');
+        setVendor(''); setStatus('Aktif'); 
+        if (dcList.length > 0) setInisialDc(dcList[0].inisialDc);
         setEditId(null); setShowForm(false);
     };
 
@@ -39,6 +59,7 @@ export const useUpdateArmada = () => {
         setJenisArmada(item.jenisArmada);
         setNamaDriver(item.namaDriver);
         setVendor(item.vendor !== '-' ? item.vendor : '');
+        setInisialDc(item.inisialDc || '');
         setStatus(item.status);
         setEditId(item.id);
         setShowForm(true);
@@ -58,7 +79,7 @@ export const useUpdateArmada = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!noMobil.trim() || !jenisArmada.trim() || !namaDriver.trim() || !vendor.trim()) {
+        if (!noMobil.trim() || !jenisArmada.trim() || !namaDriver.trim() || !vendor.trim() || !inisialDc.trim()) {
             toast.error('Gagal', { description: 'Mohon lengkapi semua field yang wajib' });
             return;
         }
@@ -67,6 +88,7 @@ export const useUpdateArmada = () => {
             const payload = {
                 noArmada: noMobil.trim(), jenisArmada: jenisArmada.trim(),
                 namaDriver: namaDriver.trim(), vendor: vendor.trim(),
+                inisialDc: inisialDc.trim(),
                 status: status.trim() || 'Aktif',
             };
             if (editId) {
@@ -87,7 +109,8 @@ export const useUpdateArmada = () => {
     return {
         data, showForm, setShowForm, isLoading, editId,
         noMobil, setNoMobil, jenisArmada, setJenisArmada,
-        namaDriver, setNamaDriver, vendor, setVendor, status, setStatus,
+        namaDriver, setNamaDriver, vendor, setVendor, 
+        inisialDc, setInisialDc, dcList, status, setStatus,
         resetForm, handleEdit, handleRemove, handleSubmit,
     };
 };

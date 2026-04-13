@@ -1,3 +1,4 @@
+"use client";
 
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -8,8 +9,8 @@ import { SuratTugasAddEntriesForm } from './components/SuratTugasAddEntriesForm'
 export default function SuratTugasAddPage() {
     const {
         isEditMode, noMobil, dc, setDc, dcList, namaDriver, setNamaDriver, tanggalKirim, setTanggalKirim,
-        entries, armadaList, isLoading, isFetchingEdit, handleNoMobilChange,
-        updateEntry, addEntry, removeEntry, handleSubmit, navigate
+        entries, armadaList, tokoList, isLoading, isFetchingEdit, handleNoMobilChange,
+        updateEntry, addEntry, removeEntry, handleSubmit, router
     } = useSuratTugasAdd();
 
     if (isFetchingEdit) {
@@ -26,7 +27,7 @@ export default function SuratTugasAddPage() {
                 <Button
                     variant="outline"
                     size="icon"
-                    onClick={() => navigate('/rekap-armada/surat-tugas')}
+                    onClick={() => router.push('/rekap-armada/surat-tugas')}
                     className="h-9 w-9"
                 >
                     <ArrowLeft className="h-4 w-4" />
@@ -52,10 +53,11 @@ export default function SuratTugasAddPage() {
                 <SuratTugasAddEntriesForm
                     entries={entries} addEntry={addEntry} 
                     removeEntry={removeEntry} updateEntry={updateEntry}
+                    tokoList={tokoList}
                 />
 
                 <div className="flex justify-end gap-3">
-                    <Button type="button" variant="outline" onClick={() => navigate('/rekap-armada/surat-tugas')}>
+                    <Button type="button" variant="outline" onClick={() => router.push('/rekap-armada/surat-tugas')}>
                         Batal
                     </Button>
                     <Button type="submit" disabled={isLoading}>

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { fetchUsers, deleteUser, updateUser, createUser } from '../services/data-user.service';

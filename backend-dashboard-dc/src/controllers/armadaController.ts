@@ -15,14 +15,14 @@ export const getArmada = async (req: Request, res: Response) => {
 
 export const createArmada = async (req: Request, res: Response) => {
     try {
-        const { noArmada, jenisArmada, namaDriver, vendor, status } = req.body;
+        const { noArmada, jenisArmada, namaDriver, vendor, inisialDc, status } = req.body;
 
-        if (!noArmada || !jenisArmada || !namaDriver || !vendor || !status) {
+        if (!noArmada || !jenisArmada || !namaDriver || !vendor || !inisialDc || !status) {
             return res.status(400).json({ error: 'Semua field wajib diisi' });
         }
 
         const newArmada = await prisma.updateArmada.create({
-            data: { noArmada, jenisArmada, namaDriver, vendor, status }
+            data: { noArmada, jenisArmada, namaDriver, vendor, inisialDc, status }
         });
 
         res.status(201).json(newArmada);
@@ -46,15 +46,15 @@ export const deleteArmada = async (req: Request, res: Response) => {
 export const updateArmada = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { noArmada, jenisArmada, namaDriver, vendor, status } = req.body;
+        const { noArmada, jenisArmada, namaDriver, vendor, inisialDc, status } = req.body;
 
-        if (!noArmada || !jenisArmada || !namaDriver || !vendor || !status) {
+        if (!noArmada || !jenisArmada || !namaDriver || !vendor || !inisialDc || !status) {
             return res.status(400).json({ error: 'Semua field wajib diisi' });
         }
 
         const updatedArmada = await prisma.updateArmada.update({
             where: { id: Number(id) },
-            data: { noArmada, jenisArmada, namaDriver, vendor, status }
+            data: { noArmada, jenisArmada, namaDriver, vendor, inisialDc, status }
         });
 
         res.json(updatedArmada);

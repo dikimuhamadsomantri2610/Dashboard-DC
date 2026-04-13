@@ -1,3 +1,4 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import { Trash2, FileText } from 'lucide-react';
 import type { GroupedSuratTugas } from '../types/surat-tugas.types';

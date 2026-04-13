@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+"use client";
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Plus } from 'lucide-react';
+import { Plus, Snowflake } from 'lucide-react';
 import { useSuratTugasFresh } from './hooks/useSuratTugasFresh';
 import SuratTugasFreshToolbar from './components/SuratTugasFreshToolbar';
 import SuratTugasFreshTable from './components/SuratTugasFreshTable';
@@ -9,7 +10,7 @@ import SuratTugasFreshDialogs from './components/SuratTugasFreshDialogs';
 import SuratTugasFreshPaperA4 from './print/SuratTugasFreshPaperA4';
 
 export default function SuratTugasFreshPage() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const {
         isLoading,
         distributionCenters,
@@ -42,13 +43,18 @@ export default function SuratTugasFreshPage() {
             {/* Header / Table (Hidden on print) */}
             <div className="print:hidden space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-3xl font-bold tracking-tight">Surat Tugas Fresh</h2>
-                        <p className="text-zinc-500 dark:text-zinc-400">Kelola surat tugas armada kendaraan.</p>
+                    <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-100 text-cyan-600 dark:bg-cyan-900/40 dark:text-cyan-400 shadow-sm">
+                            <Snowflake className="h-6 w-6" />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-bold tracking-tight">Surat Tugas Fresh</h2>
+                            <p className="text-zinc-500 dark:text-zinc-400">Kelola surat tugas armada kendaraan.</p>
+                        </div>
                     </div>
                     <div className="flex items-center gap-2">
                         <Button
-                            onClick={() => navigate('/rekap-armada/surat-tugas-fresh/add')}
+                            onClick={() => router.push('/rekap-armada/surat-tugas-fresh/add')}
                             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white dark:bg-lime-500 dark:hover:bg-lime-600 dark:text-white"
                         >
                             <Plus className="h-4 w-4" />

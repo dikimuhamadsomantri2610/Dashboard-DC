@@ -1,6 +1,7 @@
+"use client";
 import { useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 /**
@@ -16,7 +17,7 @@ interface AutoLogoutProps {
 
 export default function AutoLogout({ timeoutMs = 15 * 60 * 1000 }: AutoLogoutProps) {
     const { logout, isAuthenticated } = useAuth();
-    const navigate = useNavigate();
+    const router = useRouter();
     const lastActivityRef = useRef<number>(Date.now());
     const timerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -24,9 +25,9 @@ export default function AutoLogout({ timeoutMs = 15 * 60 * 1000 }: AutoLogoutPro
         if (isAuthenticated) {
             toast.info('Sesi Anda telah berakhir karena tidak ada aktivitas.');
             logout();
-            navigate('/login');
+            router.push('/login');
         }
-    }, [isAuthenticated, logout, navigate]);
+    }, [isAuthenticated, logout, router]);
 
     useEffect(() => {
         // Event yang menandakan aktivitas pengguna

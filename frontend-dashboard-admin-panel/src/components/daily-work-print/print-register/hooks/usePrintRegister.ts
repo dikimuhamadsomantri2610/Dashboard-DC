@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useCallback } from 'react';
 import { fetchPrintRegister } from '../services/print-register.service';
 import { toast } from 'sonner';

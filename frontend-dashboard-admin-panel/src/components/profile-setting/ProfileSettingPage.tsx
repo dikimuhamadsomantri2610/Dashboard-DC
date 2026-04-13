@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+"use client";
+import { useRouter } from 'next/navigation';
 import { useProfileSetting } from './hooks/useProfileSetting';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,7 +13,7 @@ const FieldLabel = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function ProfileSetting() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const {
         username,
         namaLengkap,
@@ -32,7 +33,7 @@ export default function ProfileSetting() {
                 <Button
                     variant="outline"
                     size="icon"
-                    onClick={() => navigate(-1)}
+                    onClick={() => router.back()}
                     className="h-9 w-9 shrink-0"
                     title="Kembali"
                 >

@@ -1,3 +1,4 @@
+"use client";
 import { ThemeToggle } from '@/components/common/ThemeToggle';
 import { BG_ICONS, BG_LOGOS, STYLE } from '../constants/login.constants';
 

@@ -55,6 +55,7 @@ model UpdateArmada {
   jenisArmada String   @db.VarChar(50)
   namaDriver  String   @db.VarChar(50)
   vendor       String   @db.VarChar(20)
+  inisialDc      String   @db.VarChar(15)
   status       String   @db.VarChar(6)
   createdAt    DateTime @default(now())
 }

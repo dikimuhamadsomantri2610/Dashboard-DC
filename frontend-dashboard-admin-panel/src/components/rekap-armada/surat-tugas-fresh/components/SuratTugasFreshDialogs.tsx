@@ -1,3 +1,4 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import { Trash2, FileText } from 'lucide-react';
 import type { GroupedSuratTugasFresh } from '../types/surat-tugas-fresh.types';
@@ -48,7 +49,7 @@ export default function SuratTugasFreshDialogs({
 
             {/* Custom Print Confirmation Dialog */}
             {groupToConfirmPrint && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 print:hidden">
+                <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/50 p-4 print:hidden">
                     <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
                         <div className="p-6 space-y-4">
                             <h2 className="text-lg font-semibold flex items-center gap-2 text-zinc-900 dark:text-zinc-100">

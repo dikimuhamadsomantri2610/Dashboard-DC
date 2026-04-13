@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { fetchSuratTugas, deleteSuratTugas } from '../services/surat-tugas.service';
 import { toast } from 'sonner';

@@ -6,6 +6,7 @@ export interface ArmadaItem {
     jenisArmada: string;
     namaDriver: string;
     vendor: string;
+    inisialDc: string;
     status: string;
 }
 
@@ -14,17 +15,29 @@ export interface ArmadaPayload {
     jenisArmada: string;
     namaDriver: string;
     vendor: string;
+    inisialDc: string;
+    status: string;
+}
+
+export interface ArmadaApiItem {
+    id: number;
+    noArmada: string;
+    jenisArmada: string;
+    namaDriver: string;
+    vendor: string;
+    inisialDc: string;
     status: string;
 }
 
 export const fetchArmada = async (): Promise<ArmadaItem[]> => {
     const res = await api.get('/armada');
-    return res.data.map((item: any) => ({
+    return res.data.map((item: ArmadaApiItem) => ({
         id: item.id,
         noMobil: item.noArmada,
         jenisArmada: item.jenisArmada,
         namaDriver: item.namaDriver,
         vendor: item.vendor,
+        inisialDc: item.inisialDc,
         status: item.status,
     }));
 };

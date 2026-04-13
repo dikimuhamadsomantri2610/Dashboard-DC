@@ -1,3 +1,4 @@
+"use client";
 import { useDataUser } from './hooks/useDataUser';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

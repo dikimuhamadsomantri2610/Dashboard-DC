@@ -1,5 +1,8 @@
+"use client";
+
 import { useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/components/common/ThemeProvider';
 import { Button } from '@/components/ui/button';
@@ -19,7 +22,8 @@ import {
     LayoutDashboard, Printer, FileText, LogOut, Menu,
     Moon, Sun, Users, Truck, ChevronRight, ChevronDown,
     BarChart2, FileSignature, Store, Wrench, ClipboardCheck,
-    CalendarDays, CalendarRange, Tags, MapPin, Box, Hash
+    CalendarDays, CalendarRange, Tags, MapPin, Box, Hash,
+    Snowflake
 } from 'lucide-react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
@@ -40,7 +44,7 @@ interface NavItem {
 
 // ─── Daftar menu ────────────────────────────────────────────────────────────
 const navigation: NavItem[] = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, iconColor: 'text-blue-500 dark:text-blue-400' },
+    { name: 'Dashboard', href: '/', icon: LayoutDashboard, iconColor: 'text-blue-500 dark:text-blue-400' },
     {
         name: 'Daily Work Print',
         href: '#',
@@ -58,7 +62,7 @@ const navigation: NavItem[] = [
         iconColor: 'text-amber-500 dark:text-amber-400',
         children: [
             { name: 'Surat Tugas', href: '/rekap-armada/surat-tugas', icon: FileSignature, iconColor: 'text-amber-500 dark:text-amber-400' },
-            { name: 'Surat Tugas Fresh', href: '/rekap-armada/surat-tugas-fresh', icon: FileSignature, iconColor: 'text-amber-400 dark:text-amber-300' },
+            { name: 'Surat Tugas Fresh', href: '/rekap-armada/surat-tugas-fresh', icon: Snowflake, iconColor: 'text-amber-400 dark:text-blue-300' },
             { name: 'Update Toko', href: '/rekap-armada/update-toko', icon: Store, iconColor: 'text-orange-500 dark:text-orange-400' },
             { name: 'Update Armada', href: '/rekap-armada/update-armada', icon: Wrench, iconColor: 'text-orange-400 dark:text-orange-300' },
             { name: 'Report', href: '/rekap-armada/report', icon: BarChart2, iconColor: 'text-yellow-500 dark:text-yellow-400' },
@@ -105,7 +109,8 @@ const navigation: NavItem[] = [
 
 // ─── NavLinks ────────────────────────────────────────────────────────────────
 const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isSidebarOpen?: boolean }) => {
-    const location = useLocation();
+    const pathname = usePathname() || '/';
+    const location = { pathname };
 
     // State collapsible per item yang punya children
     const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
@@ -154,7 +159,7 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
                                         return (
                                             <Link
                                                 key={child.name}
-                                                to={child.href}
+                                                href={child.href}
                                                 onClick={onClick}
                                                 className={linkClass(childActive)}
                                             >
@@ -173,7 +178,7 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
                 return (
                     <Link
                         key={item.name}
-                        to={item.href}
+                        href={item.href}
                         onClick={onClick}
                         className={linkClass(location.pathname === item.href)}
                         title={!isSidebarOpen ? item.name : undefined}
@@ -188,7 +193,7 @@ const NavLinks = ({ onClick, isSidebarOpen = true }: { onClick?: () => void; isS
 };
 
 // ─── DashboardLayout ─────────────────────────────────────────────────────────
-export default function DashboardLayout() {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const { logout, user } = useAuth();
     const { theme, setTheme } = useTheme();
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -231,7 +236,7 @@ export default function DashboardLayout() {
             {/* Main Content */}
             <div className="flex flex-1 flex-col">
                 {/* Top Navbar */}
-                <header className="sticky top-0 z-[999] flex h-16 items-center gap-4 border-b border-zinc-200/60 dark:border-zinc-800/60 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-md px-4 sm:px-6 print:hidden">
+                <header className="sticky top-0 z-999 flex h-16 items-center gap-4 border-b border-zinc-200/60 dark:border-zinc-800/60 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-md px-4 sm:px-6 print:hidden">
                     <div className="flex items-center gap-2">
                         {/* Mobile Menu Trigger */}
                         <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
@@ -309,7 +314,7 @@ export default function DashboardLayout() {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem asChild>
-                                    <Link to="/profile" className="cursor-pointer flex items-center p-2 rounded-md transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                                    <Link href="/profile" className="cursor-pointer flex items-center p-2 rounded-md transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">
                                         <Users className="mr-2 h-4 w-4" />
                                         <span>Pengaturan Profil</span>
                                     </Link>
@@ -330,7 +335,7 @@ export default function DashboardLayout() {
                 {/* Page Content */}
                 <main className="flex-1 overflow-y-auto bg-zinc-100 dark:bg-background p-4 sm:p-6 lg:p-8">
                     <div className="mx-auto max-w-6xl">
-                        <Outlet />
+                        {children}
                     </div>
                 </main>
             </div>

@@ -1,6 +1,8 @@
+"use client";
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { fetchArmadaList, fetchSuratTugas, deleteSuratTugas, createSuratTugas, fetchDistributionCenters } from '../../services/surat-tugas.service';
+import { fetchToko, type TokoItem } from '../../../update-toko/services/toko.service';
 import { toast } from 'sonner';
 import { type GembokEntry, emptyEntry } from '../types/surat-tugas-add.types';
 import type { SuratTugasApiItem } from '../../types/surat-tugas.types';
@@ -18,9 +20,9 @@ interface DcItem {
 }
 
 export const useSuratTugasAdd = () => {
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const groupId = searchParams.get('groupId');
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const groupId = searchParams?.get('groupId');
     const isEditMode = !!groupId;
 
     const [noMobil, setNoMobil] = useState('');
@@ -33,6 +35,7 @@ export const useSuratTugasAdd = () => {
     
     // State tambahan untuk saran Armada
     const [armadaList, setArmadaList] = useState<ArmadaItem[]>([]);
+    const [tokoList, setTokoList] = useState<TokoItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isFetchingEdit, setIsFetchingEdit] = useState(false);
 
@@ -66,6 +69,19 @@ export const useSuratTugasAdd = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Fetch daftar Toko
+    useEffect(() => {
+        const getTokoList = async () => {
+            try {
+                const resData = await fetchToko();
+                setTokoList(resData);
+            } catch (error) {
+                console.error("Gagal mengambil data Toko:", error);
+            }
+        };
+        getTokoList();
+    }, []);
+
     // Fetch edit data
     useEffect(() => {
         if (!isEditMode || !groupId) return;
@@ -83,7 +99,7 @@ export const useSuratTugasAdd = () => {
 
                 if (groupItems.length === 0) {
                     toast.error('Data tidak ditemukan', { description: 'Grup surat tugas tidak ditemukan.' });
-                    navigate('/rekap-armada/surat-tugas');
+                    router.push('/rekap-armada/surat-tugas');
                     return;
                 }
 
@@ -115,7 +131,7 @@ export const useSuratTugasAdd = () => {
         };
 
         fetchAndPopulate();
-    }, [groupId, isEditMode, navigate]);
+    }, [groupId, isEditMode, router]);
 
     const handleNoMobilChange = (value: string) => {
         setNoMobil(value);
@@ -173,7 +189,7 @@ export const useSuratTugasAdd = () => {
             toast.success(isEditMode ? 'Berhasil Diperbarui' : 'Berhasil', {
                 description: isEditMode ? 'Data Surat Tugas armada berhasil diperbarui.' : 'Data Surat Tugas armada berhasil disimpan.'
             });
-            navigate('/rekap-armada/surat-tugas');
+            router.push('/rekap-armada/surat-tugas');
         } catch (error) {
             console.error('Submit Surat Tugas error:', error);
             const msg = error instanceof Error ? error.message : 'Terjadi kesalahan saat menyimpan data.';
@@ -185,7 +201,7 @@ export const useSuratTugasAdd = () => {
 
     return {
         isEditMode, noMobil, dc, setDc, dcList, namaDriver, setNamaDriver, tanggalKirim, setTanggalKirim,
-        entries, armadaList, isLoading, isFetchingEdit, handleNoMobilChange,
-        updateEntry, addEntry, removeEntry, handleSubmit, navigate
+        entries, armadaList, tokoList, isLoading, isFetchingEdit, handleNoMobilChange,
+        updateEntry, addEntry, removeEntry, handleSubmit, router
     };
 };

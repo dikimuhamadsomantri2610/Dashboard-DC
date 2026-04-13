@@ -1,3 +1,4 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -21,7 +22,8 @@ export default function UpdateArmadaPage() {
     const {
         data, showForm, setShowForm, isLoading, editId,
         noMobil, setNoMobil, jenisArmada, setJenisArmada,
-        namaDriver, setNamaDriver, vendor, setVendor, status, setStatus,
+        namaDriver, setNamaDriver, vendor, setVendor, 
+        inisialDc, setInisialDc, dcList, status, setStatus,
         resetForm, handleEdit, handleRemove, handleSubmit,
     } = useUpdateArmada();
 
@@ -55,7 +57,21 @@ export default function UpdateArmadaPage() {
                                 <div className="space-y-2"><FieldLabel>No Armada</FieldLabel><Input placeholder="Contoh: B 1234 XTZ" value={noMobil} onChange={e => setNoMobil(e.target.value)} required /></div>
                                 <div className="space-y-2"><FieldLabel>Jenis Armada</FieldLabel><Input placeholder="Contoh: ENGKEL" value={jenisArmada} onChange={e => setJenisArmada(e.target.value)} required /></div>
                                 <div className="space-y-2"><FieldLabel>Nama Driver</FieldLabel><Input placeholder="Contoh: ASEP YUWANA" value={namaDriver} onChange={e => setNamaDriver(e.target.value)} required /></div>
-                                <div className="space-y-2"><FieldLabel>Vendor</FieldLabel><Input placeholder="Contoh: Internal" value={vendor} onChange={e => setVendor(e.target.value)} /></div>
+                                <div className="space-y-2"><FieldLabel>Vendor</FieldLabel><Input placeholder="Contoh: Internal" value={vendor} onChange={e => setVendor(e.target.value)} required /></div>
+                                <div className="space-y-2">
+                                    <FieldLabel>Distribution Center (DC)</FieldLabel>
+                                    <select 
+                                        className="flex h-9 w-full rounded-md border border-input bg-background dark:bg-zinc-950 px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-foreground" 
+                                        value={inisialDc} 
+                                        onChange={e => setInisialDc(e.target.value)}
+                                        required
+                                    >
+                                        <option value="" disabled>Pilih DC</option>
+                                        {dcList.map(dc => (
+                                            <option key={dc.id} value={dc.inisialDc}>{dc.namaDc} ({dc.inisialDc})</option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <div className="space-y-2">
                                     <FieldLabel>Status</FieldLabel>
                                     <select className="flex h-9 w-full rounded-md border border-input bg-background dark:bg-zinc-950 px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-foreground" value={status} onChange={e => setStatus(e.target.value)}>
@@ -89,13 +105,14 @@ export default function UpdateArmadaPage() {
                                     <TableHead>Jenis Armada</TableHead>
                                     <TableHead>Nama Driver</TableHead>
                                     <TableHead>Vendor</TableHead>
+                                    <TableHead>DC</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="text-center w-28">Aksi</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {data.length === 0 ? (
-                                    <TableRow><TableCell colSpan={7} className="text-center py-8 text-zinc-500 dark:text-zinc-400">Belum ada data armada.</TableCell></TableRow>
+                                    <TableRow><TableCell colSpan={8} className="text-center py-8 text-zinc-500 dark:text-zinc-400">Belum ada data armada.</TableCell></TableRow>
                                 ) : data.map((item, index) => (
                                     <TableRow key={item.id}>
                                         <TableCell className="text-center font-medium">{index + 1}</TableCell>
@@ -103,6 +120,7 @@ export default function UpdateArmadaPage() {
                                         <TableCell>{item.jenisArmada}</TableCell>
                                         <TableCell>{item.namaDriver}</TableCell>
                                         <TableCell>{item.vendor}</TableCell>
+                                        <TableCell className="font-semibold text-zinc-700 dark:text-zinc-300">{item.inisialDc}</TableCell>
                                         <TableCell><StatusBadge statusValue={item.status} /></TableCell>
                                         <TableCell>
                                             <div className="flex items-center justify-center gap-2">

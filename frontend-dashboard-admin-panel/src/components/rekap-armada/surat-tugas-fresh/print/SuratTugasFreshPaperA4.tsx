@@ -1,3 +1,4 @@
+"use client";
 import type { GroupedSuratTugasFresh, SuratTugasFreshApiItem } from '../types/surat-tugas-fresh.types';
 import { generateKodeGembok } from './utils/generateKodeGembok';
 import { SuratTugasFreshBarcode as BarcodeBox } from './components/SuratTugasFreshBarcode';
@@ -68,7 +69,7 @@ function SingleA4Page({ data, pageItems, startIndex, isLastPage, distributionCen
                 <div className="relative flex justify-center items-center mb-4">
                     <div className="absolute left-0 top-0">
                         {/* Using <img> for SVG to ensure it prints well */}
-                        <img src="/src/assets/logo_yomart_detail.svg" alt="Yomart Logo" className="h-15 object-contain" />
+                        <img src="/logo_yomart_detail.svg" alt="Yomart Logo" className="h-15 object-contain" />
                     </div>
                     <div className="text-center pt-4">
                         <h1 className="text-[16px] font-bold tracking-wider mb-2">SURAT TUGAS PENGIRIMAN {dcName}</h1>

@@ -1,3 +1,4 @@
+"use client";
 import { usePrintRegister } from './hooks/usePrintRegister';
 import PrintRegisterFilter from './components/PrintRegisterFilter';
 import PrintRegisterDocument from './components/PrintRegisterDocument';

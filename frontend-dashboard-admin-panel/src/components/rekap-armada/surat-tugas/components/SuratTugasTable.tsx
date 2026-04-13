@@ -1,8 +1,9 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Pencil, Trash2, Printer } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import type { GroupedSuratTugas } from '../types/surat-tugas.types';
 
 interface SuratTugasTableProps {
@@ -28,10 +29,10 @@ export default function SuratTugasTable({
     confirmDeleteGroup,
     setGroupToConfirmPrint
 }: SuratTugasTableProps) {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleEdit = (group: GroupedSuratTugas) => {
-        navigate(`/rekap-armada/surat-tugas/add?groupId=${encodeURIComponent(group.groupId)}`);
+        router.push(`/rekap-armada/surat-tugas/add?groupId=${encodeURIComponent(group.groupId)}`);
     };
 
     return (

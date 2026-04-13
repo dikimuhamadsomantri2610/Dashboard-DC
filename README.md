@@ -2,7 +2,7 @@
 
 Proyek ini adalah sistem Dashboard untuk Distribution Center (DC) yang dibangun dengan stack modern:
 
-- **Frontend**: React (Vite) + Tailwind CSS + TypeScript
+- **Frontend**: React (Next.js) + Tailwind CSS + TypeScript
 - **Backend**: Node.js + Express + Prisma ORM + TypeScript
 - **DBMS / Database**: PostgreSQL
 
@@ -73,7 +73,7 @@ Karena sistem ini terbagi menjadi bagian Backend dan Frontend, Anda harus menjal
      ```bash
      npm start
      ```
-     Backend sekarang berjalan (biasanya di `http://localhost:3000`). Biarkan terminal ini tetap terbuka.
+     Backend sekarang berjalan di `http://localhost:5000`. Biarkan terminal ini tetap terbuka.
 
 ---
 
@@ -91,17 +91,24 @@ Karena sistem ini terbagi menjadi bagian Backend dan Frontend, Anda harus menjal
    npm install
    ```
 
-3. **Buat file Environment Variables (`.env`) untuk Frontend (jika diperlukan)**
-   Jika frontend membutuhkan koneksi spesifik ke backend, buat file `.env` di folder `frontend-dashboard-admin-panel/`:
+3. **Buat file Environment Variables (`.env`) untuk Frontend**
+   Buat file `.env` di folder `frontend-dashboard-admin-panel/`:
 
    ```env
-   VITE_API_BASE_URL="http://localhost:3000/api"
+   NEXT_PUBLIC_API_URL="http://localhost:5000/api"
    ```
 
 4. **Jalankan Web Frontend:**
-   ```bash
-   npm run dev
-   ```
+   - Untuk mode pengembangan:
+     ```bash
+     npm run dev
+     ```
+   - Untuk mode produksi:
+     ```bash
+     npm run build
+     npm start
+     ```
+   Aplikasi berjalan di port **3000** (`http://localhost:3000`).
 
 ---
 
@@ -119,16 +126,23 @@ Karena sistem ini terbagi menjadi bagian Backend dan Frontend, Anda harus menjal
    npm install
    ```
 
-3. **Buat file Environment Variables (`.env`) (jika diperlukan)**
+3. **Buat file Environment Variables (`.env`)**
 
    ```env
-   VITE_API_BASE_URL="http://localhost:5000/api"
+   NEXT_PUBLIC_API_URL="http://localhost:5000/api"
    ```
 
 4. **Jalankan Web Frontend:**
-   ```bash
-   npm run dev
-   ```
+   - Untuk mode pengembangan:
+     ```bash
+     npm run dev
+     ```
+   - Untuk mode produksi:
+     ```bash
+     npm run build
+     npm start
+     ```
+   Aplikasi berjalan di port **3001** (`http://localhost:3001`).
 
 Selesai! Sistem sudah berhasil dijalankan secara penuh di komputer Anda. 🎉
 
@@ -142,27 +156,19 @@ Jika besok-besok Anda hanya ingin sekadar menjalankan kembali, cukup buka termin
 
 ```bash
 cd backend-dashboard-dc
-npm run dev
+npm start
 ```
 
 **Terminal 2 (Frontend Admin Panel):**
 
 ```bash
 cd frontend-dashboard-admin-panel
-npm run dev
+npm start
 ```
 
 **Terminal 3 (Frontend Presensi View):**
 
 ```bash
 cd frontend-presensi-view
-npm run dev
-```
-
-**Alternatif (Jalankan Menggunakan File .sh dari root folder):**
-
-```bash
-./start-backend-dashboard-dc.sh
-./start-frontend-dashboard-admin-panel.sh
-./start-frontend-presensi-view.sh
+npm start
 ```

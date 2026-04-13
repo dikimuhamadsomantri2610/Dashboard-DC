@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { fetchPresensiSummary, fetchPresensiDetail } from '../services/presensi.service';
 import * as XLSX from 'xlsx';

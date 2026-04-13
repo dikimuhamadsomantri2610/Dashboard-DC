@@ -1,3 +1,4 @@
+"use client";
 import { usePrintKoli } from './hooks/usePrintKoli';
 import PrintKoliFilter from './components/PrintKoliFilter';
 import PrintKoliDocument from './components/PrintKoliDocument';

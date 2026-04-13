@@ -1,8 +1,9 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Pencil, Trash2, Printer } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import type { GroupedSuratTugasFresh } from '../types/surat-tugas-fresh.types';
 
 interface SuratTugasFreshTableProps {
@@ -28,10 +29,10 @@ export default function SuratTugasFreshTable({
     confirmDeleteGroup,
     setGroupToConfirmPrint
 }: SuratTugasFreshTableProps) {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleEdit = (group: GroupedSuratTugasFresh) => {
-        navigate(`/rekap-armada/surat-tugas-fresh/add?groupId=${encodeURIComponent(group.groupId)}`);
+        router.push(`/rekap-armada/surat-tugas-fresh/add?groupId=${encodeURIComponent(group.groupId)}`);
     };
 
     // Hitung penomoran harian (reset ke 1 setiap beda hari)
