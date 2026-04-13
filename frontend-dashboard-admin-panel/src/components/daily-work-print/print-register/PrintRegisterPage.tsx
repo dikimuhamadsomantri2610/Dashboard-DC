@@ -1,4 +1,5 @@
 "use client";
+import { FileText } from 'lucide-react';
 import { usePrintRegister } from './hooks/usePrintRegister';
 import PrintRegisterFilter from './components/PrintRegisterFilter';
 import PrintRegisterDocument from './components/PrintRegisterDocument';
@@ -32,9 +33,14 @@ export default function PrintRegisterPage() {
                 `}
             </style>
             <div className="flex items-center justify-between print:hidden">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Print Register - Masih Develop</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Daftar data Register yang tersedia di sistem.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400 shadow-sm">
+                        <FileText className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Print Register - Masih Develop</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Daftar data Register yang tersedia di sistem.</p>
+                    </div>
                 </div>
             </div>
 

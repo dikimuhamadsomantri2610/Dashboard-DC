@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, FileText, Activity, Users, Truck, ArrowUpRight } from 'lucide-react';
+import { Package, FileText, Activity, Users, Truck, ArrowUpRight, LayoutDashboard } from 'lucide-react';
 
 export default function Dashboard() {
     return (
@@ -8,7 +8,7 @@ export default function Dashboard() {
             {/* Hero Section */}
             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white shadow-lg">
                 <div className="relative z-10">
-                    <h2 className="text-3xl font-bold tracking-tight mb-2">Selamat Datang di Dashboard DC! 👋</h2>
+                    <h2 className="text-3xl font-bold tracking-tight mb-2 flex items-center gap-3"><LayoutDashboard className="h-8 w-8" />Selamat Datang di Dashboard DC! 👋</h2>
                     <p className="text-blue-100 max-w-2xl">
                         PROSES DALAM PENGEMBANGAN By. Diki. Pantau ringkasan aktivitas, performa armada, dan data operasional harian Anda di sini.
                     </p>

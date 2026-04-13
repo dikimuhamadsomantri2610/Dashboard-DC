@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, FileSignature } from 'lucide-react';
 import { useSuratTugasAdd } from './hooks/useSuratTugasAdd';
 import { SuratTugasAddVehicleForm } from './components/SuratTugasAddVehicleForm';
 import { SuratTugasAddEntriesForm } from './components/SuratTugasAddEntriesForm';
@@ -32,11 +32,14 @@ export default function SuratTugasAddPage() {
                 >
                     <ArrowLeft className="h-4 w-4" />
                 </Button>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400 shadow-sm shrink-0">
+                    <FileSignature className="h-6 w-6" />
+                </div>
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">
+                    <h2 className="text-2xl font-bold tracking-tight">
                         {isEditMode ? 'Edit Surat Tugas Armada' : 'Surat Tugas Armada'}
                     </h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
                         {isEditMode ? 'Ubah data surat tugas armada kendaraan.' : 'Isi form surat tugas armada kendaraan.'}
                     </p>
                 </div>

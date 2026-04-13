@@ -57,8 +57,10 @@ export default function DataKaryawanReceiving() {
         try {
             await addKaryawan({ nik: form.nik.trim(), nama: form.nama.trim(), divisi: form.divisi });
             setShowModal(false);
-        } catch (err: any) {
-            const msg = err?.response?.data?.error || 'Gagal menyimpan data.';
+        } catch (err: unknown) {
+            const msg = err instanceof Error && 'response' in err
+                ? (err as { response?: { data?: { error?: string } } }).response?.data?.error || 'Gagal menyimpan data.'
+                : 'Gagal menyimpan data.';
             setFormError(msg);
         }
     };

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Plus } from 'lucide-react';
+import { Plus, FileSignature } from 'lucide-react';
 import { useSuratTugas } from './hooks/useSuratTugas';
 import SuratTugasToolbar from './components/SuratTugasToolbar';
 import SuratTugasTable from './components/SuratTugasTable';
@@ -33,9 +33,14 @@ export default function SuratTugasPage() {
         <div className="space-y-6">
             <div className="print:hidden space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-3xl font-bold tracking-tight">Surat Tugas</h2>
-                        <p className="text-zinc-500 dark:text-zinc-400">Kelola surat tugas armada kendaraan.</p>
+                    <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400 shadow-sm">
+                            <FileSignature className="h-6 w-6" />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-bold tracking-tight">Surat Tugas</h2>
+                            <p className="text-sm text-zinc-500 dark:text-zinc-400">Kelola surat tugas armada kendaraan.</p>
+                        </div>
                     </div>
                     <div className="flex items-center gap-2">
                         <Button

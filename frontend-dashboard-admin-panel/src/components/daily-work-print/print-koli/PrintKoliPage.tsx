@@ -1,4 +1,5 @@
 "use client";
+import { Printer } from 'lucide-react';
 import { usePrintKoli } from './hooks/usePrintKoli';
 import PrintKoliFilter from './components/PrintKoliFilter';
 import PrintKoliDocument from './components/PrintKoliDocument';
@@ -29,9 +30,14 @@ export default function PrintKoliPage() {
             </style>
             {/* Page Header */}
             <div className="flex items-center justify-between print:hidden">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Print Koli - Masih Develop</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400">Daftar data Koli yang tersedia di sistem.</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400 shadow-sm">
+                        <Printer className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight">Print Koli - Masih Develop</h2>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Daftar data Koli yang tersedia di sistem.</p>
+                    </div>
                 </div>
             </div>
 

@@ -4,7 +4,7 @@ import api from "@/lib/axios";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Printer } from "lucide-react";
+import { Printer, Box } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -135,11 +135,16 @@ export default function LabelAfterPickFresh() {
 
       {/* --- UI LAYER --- */}
       <div className="space-y-6">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Label After Pick Fresh</h2>
-          <p className="text-zinc-500 dark:text-zinc-400">
-            Generate dan cetak label thermal 4x2 cm khusus Printer Zebra.
-          </p>
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-100 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400 shadow-sm">
+            <Box className="h-6 w-6" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Label After Pick Fresh</h2>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              Generate dan cetak label thermal 4x2 cm khusus Printer Zebra.
+            </p>
+          </div>
         </div>
 
         <Card>
