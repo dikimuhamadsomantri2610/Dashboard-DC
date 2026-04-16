@@ -112,7 +112,9 @@ export const useSuratTugasFreshAdd = () => {
                 const filledEntries: GembokFreshEntry[] = groupItems.map((item) => ({
                     numberSeal: item.numberSeal || '',
                     inisialToko: item.inisialToko || '',
-                    jumlahKoli: String(item.jumlahKoli ?? ''),
+                    jumlahContainer: String(item.jumlahContainer ?? ''),
+                    jumlahBox: String(item.jumlahBox ?? ''),
+                    jumlahDus: String(item.jumlahDus ?? ''),
                     kodeGembok: item.kodeGembok || '',
                 }));
                 setEntries(filledEntries);
@@ -148,7 +150,7 @@ export const useSuratTugasFreshAdd = () => {
 
     const addEntry = () => {
         const lastEntry = entries[entries.length - 1];
-        if (!lastEntry.numberSeal || !lastEntry.inisialToko || !lastEntry.jumlahKoli || !lastEntry.kodeGembok) {
+        if (!lastEntry.numberSeal || !lastEntry.inisialToko || !lastEntry.kodeGembok) {
             toast.error('Data Belum Lengkap', { description: 'Pastikan semua inputan pada toko sebelumnya telah diisi sebelum menambah toko baru.' });
             return;
         }

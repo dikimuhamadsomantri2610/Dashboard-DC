@@ -218,7 +218,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <div className="flex items-center justify-center">
                         <span className="flex items-center justify-center font-bold truncate">
                             {isSidebarOpen
-                                ? (<><img src="/logo_yomart.svg" alt="logo" className="h-5 w-5 mr-2" />ADMIN PANEL</>)
+                                ? (<><img src="/logo_yomart.svg" alt="logo" className="h-5 w-5 mr-2" />Admin Panel</>)
                                 : (<img src="/logo_yomart.svg" alt="logo" className="h-6 w-6" />)}
                         </span>
                     </div>

@@ -8,65 +8,67 @@ datasource db {
 }
 
 model DistributionCenter {
-  id              Int      @id @default(autoincrement())
-  site            String   @db.VarChar(5)
+  id             Int      @id @default(autoincrement())
+  site           String   @db.VarChar(5)
   inisialDc      String   @db.VarChar(15)
   namaDc         String   @db.VarChar(25)
   alamatDc       String   @db.VarChar(100)
-  phoneNumber   String   @db.VarChar(20)
-  createdAt       DateTime @default(now())
+  phoneNumber    String   @db.VarChar(20)
+  createdAt      DateTime @default(now())
 }
 
 model SuratTugas {
-  id               Int      @id @default(autoincrement())
+  id              Int      @id @default(autoincrement())
   noArmada        String   @db.VarChar(20)
-  dc               String   @db.VarChar(10)
+  dc              String   @db.VarChar(10)
   namaDriver      String   @db.VarChar(50)
   numberSeal      String   @db.VarChar(15)
   loadNumber      String   @db.VarChar(10)
   inisialToko     String   @default("") @db.VarChar(10)
   jumlahContainer Int
   jumlahKoli      Int
-  materai          String   @db.VarChar(5)
+  materai         String   @db.VarChar(5)
+  kodeGembok      String   @db.VarChar(50)
+  keterangan      String   @default("R") @db.VarChar(5)
+  admin           String   @default("System") @db.VarChar(50)
+  createdAt       DateTime @default(now())
+  tanggalKirim    DateTime @default(now())
+}
+
+model SuratTugasFresh {
+  id               Int      @id @default(autoincrement())
+  noArmada         String   @db.VarChar(20)
+  dc               String   @db.VarChar(10)
+  namaDriver       String   @db.VarChar(50)
+  numberSeal       String   @db.VarChar(15)
+  inisialToko      String   @default("") @db.VarChar(10)
+  jumlahContainer  Int
+  jumlahBox        Int
+  jumlahKardus     Int
   kodeGembok       String   @db.VarChar(50)
-  keterangan       String   @default("R") @db.VarChar(5)
   admin            String   @default("System") @db.VarChar(50)
   createdAt        DateTime @default(now())
   tanggalKirim     DateTime @default(now())
 }
 
-model SuratTugasFresh {
-  id           Int      @id @default(autoincrement())
-  noArmada    String   @db.VarChar(20)
-  dc           String   @db.VarChar(10)
-  namaDriver  String   @db.VarChar(50)
-  numberSeal  String   @db.VarChar(15)
-  inisialToko String   @default("") @db.VarChar(10)
-  jumlahKoli  Int
-  kodeGembok   String   @db.VarChar(50)
-  admin        String   @default("System") @db.VarChar(50)
-  createdAt    DateTime @default(now())
-  tanggalKirim DateTime @default(now())
-}
-
 model UpdateArmada {
   id           Int      @id @default(autoincrement())
-  noArmada    String   @db.VarChar(20)
-  jenisArmada String   @db.VarChar(50)
-  namaDriver  String   @db.VarChar(50)
+  noArmada     String   @db.VarChar(20)
+  jenisArmada  String   @db.VarChar(50)
+  namaDriver   String   @db.VarChar(50)
   vendor       String   @db.VarChar(20)
-  inisialDc      String   @db.VarChar(15)
+  inisialDc    String   @db.VarChar(15)
   status       String   @db.VarChar(6)
   createdAt    DateTime @default(now())
 }
 
 model UpdateToko {
-  id           Int      @id @default(autoincrement())
-  site         String   @db.VarChar(5)
+  id          Int      @id @default(autoincrement())
+  site        String   @db.VarChar(5)
   inisialToko String   @db.VarChar(5)
   namaToko    String   @db.VarChar(50)
   alamatToko  String   @db.VarChar(255)
-  createdAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
 }
 
 model User {
@@ -80,11 +82,11 @@ model User {
 }
 
 model Karyawan {
-  id        Int      @id @default(autoincrement())
-  nama      String   @db.VarChar(100)
-  nik       String   @unique @db.VarChar(20)
-  divisi    String   @db.VarChar(50)
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  nama       String   @db.VarChar(100)
+  nik        String   @unique @db.VarChar(20)
+  divisi     String   @db.VarChar(50)
+  createdAt  DateTime @default(now())
 }
 
 model Presensi {

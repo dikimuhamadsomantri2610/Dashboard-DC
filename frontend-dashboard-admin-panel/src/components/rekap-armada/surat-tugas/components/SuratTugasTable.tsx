@@ -111,9 +111,6 @@ export default function SuratTugasTable({
                     <span className="text-sm text-zinc-500 dark:text-zinc-400">
                         Showing {(currentPage - 1) * perPage + 1} to {Math.min(currentPage * perPage, groupedDataFiltered.length)} of {groupedDataFiltered.length} entries
                     </span>
-                    <span className="text-sm text-zinc-500 dark:text-zinc-400 italic">
-                        *Note Untuk print tolong ke Dark Mode Dulu ya-😘
-                    </span>
                     <div className="flex items-center gap-1">
                         <Button variant="outline" size="sm" className="h-8" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>Prev</Button>
                         {Array.from({ length: totalPages }).map((_, idx) => {

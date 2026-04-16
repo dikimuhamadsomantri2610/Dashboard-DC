@@ -21,7 +21,9 @@ export const createSuratTugasFresh = async (req: AuthRequest, res: Response) => 
             namaDriver: namaDriver,
             numberSeal: entry.numberSeal || '',
             inisialToko: entry.inisialToko || '',
-            jumlahKoli: Number(entry.jumlahKoli) || 0,
+            jumlahContainer: Number(entry.jumlahContainer) || 0,
+            jumlahBox: Number(entry.jumlahBox) || 0,
+            jumlahKardus: Number(entry.jumlahDus) || 0,
             kodeGembok: entry.kodeGembok || '',
             admin: adminName,
             tanggalKirim: kirimDate
@@ -64,7 +66,7 @@ export const getSuratTugasFresh = async (req: AuthRequest, res: Response) => {
                 nama_toko: tokoInfo.namaToko,
                 site: tokoInfo.site,
                 vendor: vendorMap.get(st.noArmada.toUpperCase()) || st.noArmada,
-                jumlah_container: 0,
+                jumlahDus: st.jumlahKardus,
                 materai: 'Tidak',
                 load_number: '',
                 keterangan: 'R'

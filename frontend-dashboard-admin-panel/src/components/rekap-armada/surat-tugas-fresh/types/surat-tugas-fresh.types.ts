@@ -7,7 +7,9 @@ export interface SuratTugasFreshApiItem {
     inisialToko: string;
     nama_toko: string;   // masih snake_case karena dikirim dari backend join
     site: string;
-    jumlahKoli: number;
+    jumlahContainer: number;
+    jumlahBox: number;
+    jumlahDus: number;
     kodeGembok: string;
     admin: string;
     createdAt: string;

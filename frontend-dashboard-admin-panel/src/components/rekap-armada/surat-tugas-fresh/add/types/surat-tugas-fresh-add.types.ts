@@ -1,13 +1,17 @@
 export interface GembokFreshEntry {
     numberSeal: string;
     inisialToko: string;
-    jumlahKoli: string;
+    jumlahContainer: string;
+    jumlahBox: string;
+    jumlahDus: string;
     kodeGembok: string;
 }
 
 export const emptyFreshEntry = (): GembokFreshEntry => ({
     numberSeal: '',
     inisialToko: '',
-    jumlahKoli: '',
+    jumlahContainer: '',
+    jumlahBox: '',
+    jumlahDus: '',
     kodeGembok: '',
 });

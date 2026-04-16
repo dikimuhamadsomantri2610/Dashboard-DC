@@ -80,13 +80,33 @@ export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, 
                                 </datalist>
                             </div>
                             <div className="space-y-2">
-                                <FieldLabel>Jumlah Koli</FieldLabel>
+                                <FieldLabel>Jumlah Container</FieldLabel>
                                 <Input
                                     type="number"
                                     min="0"
                                     placeholder="0"
-                                    value={entry.jumlahKoli}
-                                    onChange={e => updateEntry(index, 'jumlahKoli', e.target.value)}
+                                    value={entry.jumlahContainer}
+                                    onChange={e => updateEntry(index, 'jumlahContainer', e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <FieldLabel>Jumlah Box</FieldLabel>
+                                <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="0"
+                                    value={entry.jumlahBox}
+                                    onChange={e => updateEntry(index, 'jumlahBox', e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <FieldLabel>Jumlah Dus</FieldLabel>
+                                <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="0"
+                                    value={entry.jumlahDus}
+                                    onChange={e => updateEntry(index, 'jumlahDus', e.target.value)}
                                 />
                             </div>
                             <div className="space-y-2">
