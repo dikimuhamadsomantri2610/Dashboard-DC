@@ -327,19 +327,19 @@ function SingleA4Page({
                   style={{ border: "1px solid #000" }}
                   className="px-0.5 align-middle"
                 >
-                  {item.jumlahContainer}
+                  {item.jumlahContainer ? item.jumlahContainer : ''}
                 </td>
                 <td
                   style={{ border: "1px solid #000" }}
                   className="px-0.5 align-middle"
                 >
-                  {item.jumlahBox}
+                  {item.jumlahBox ? item.jumlahBox : ''}
                 </td>
                 <td
                   style={{ border: "1px solid #000" }}
                   className="px-0.5 align-middle"
                 >
-                  {item.jumlahDus}
+                  {item.jumlahDus ? item.jumlahDus : ''}
                 </td>
                 <td
                   style={{ border: "1px solid #000" }}
@@ -359,7 +359,7 @@ function SingleA4Page({
                   className="px-0.5 align-middle"
                 >
                   {/* Memanggil komponen Barcode berdasarkan helper kombinasi gembok dan sandi toko */}
-                  <div className="flex items-center justify-center h-[20px] overflow-hidden">
+                  <div className="flex items-center justify-center h-[24px] overflow-hidden">
                     <BarcodeBox
                       value={
                         generateKodeGembok(item.kodeGembok, item.site) || ""

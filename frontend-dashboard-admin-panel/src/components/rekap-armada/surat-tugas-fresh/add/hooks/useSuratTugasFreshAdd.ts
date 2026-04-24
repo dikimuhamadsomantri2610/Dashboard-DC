@@ -109,7 +109,8 @@ export const useSuratTugasFreshAdd = () => {
                 }
 
                 setEditItemIds(groupItems.map((i) => i.id));
-                const filledEntries: GembokFreshEntry[] = groupItems.map((item) => ({
+                const sortedGroupItems = [...groupItems].sort((a, b) => a.id - b.id);
+                const filledEntries: GembokFreshEntry[] = sortedGroupItems.map((item) => ({
                     numberSeal: item.numberSeal || '',
                     inisialToko: item.inisialToko || '',
                     jumlahContainer: String(item.jumlahContainer ?? ''),
@@ -151,7 +152,7 @@ export const useSuratTugasFreshAdd = () => {
     const addEntry = () => {
         const lastEntry = entries[entries.length - 1];
         if (!lastEntry.numberSeal || !lastEntry.inisialToko || !lastEntry.kodeGembok) {
-            toast.error('Data Belum Lengkap', { description: 'Pastikan semua inputan pada toko sebelumnya telah diisi sebelum menambah toko baru.' });
+            toast.error('Data Belum Lengkap', { description: 'Number Seal, Inisial Toko, dan Kode Gembok wajib diisi sebelum menambah toko baru.' });
             return;
         }
         setEntries(prev => {

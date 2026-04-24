@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus, Trash2 } from 'lucide-react';
 import { type GembokFreshEntry } from '../types/surat-tugas-fresh-add.types';
 
-const FieldLabel = ({ children }: { children: React.ReactNode }) => (
+const FieldLabel = ({ children, required = false }: { children: React.ReactNode; required?: boolean }) => (
     <label className="text-sm font-medium leading-none text-zinc-700 dark:text-zinc-300">
         {children}
+        {required && <span className="text-red-500 ml-1">*</span>}
     </label>
 );
 
@@ -54,7 +55,7 @@ export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, 
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div className="space-y-2">
-                                <FieldLabel>Number Seal</FieldLabel>
+                                <FieldLabel required>Number Seal</FieldLabel>
                                 <Input
                                     placeholder="Number Seal Hitam"
                                     value={entry.numberSeal}
@@ -63,7 +64,7 @@ export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, 
                                 />
                             </div>
                             <div className="space-y-2">
-                                <FieldLabel>Inisial Toko</FieldLabel>
+                                <FieldLabel required>Inisial Toko</FieldLabel>
                                 <Input
                                     placeholder="Inisial toko"
                                     value={entry.inisialToko}
@@ -110,7 +111,7 @@ export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, 
                                 />
                             </div>
                             <div className="space-y-2">
-                                <FieldLabel>Kode Gembok</FieldLabel>
+                                <FieldLabel required>Kode Gembok</FieldLabel>
                                 <Input
                                     placeholder="Input Kode Gembok"
                                     value={entry.kodeGembok}
@@ -123,6 +124,9 @@ export function SuratTugasFreshAddEntriesForm({ entries, addEntry, removeEntry, 
                                 />
                             </div>
                         </div>
+                        <p className="text-xs text-zinc-500">
+                            * Wajib diisi: Number Seal, Inisial Toko, dan Kode Gembok.
+                        </p>
                     </div>
                 ))}
             </CardContent>

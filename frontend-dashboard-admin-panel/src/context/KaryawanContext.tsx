@@ -8,6 +8,7 @@ export interface Karyawan {
     nik: string;
     nama: string;
     divisi: string;
+    jadwalJamKerja: string;
 }
 
 interface KaryawanContextType {

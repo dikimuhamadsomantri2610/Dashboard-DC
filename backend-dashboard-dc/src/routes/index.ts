@@ -7,7 +7,7 @@ import { createSuratTugas, getSuratTugas, deleteSuratTugas } from '../controller
 import { createSuratTugasFresh, getSuratTugasFresh, deleteSuratTugasFresh } from '../controllers/suratTugasFreshController';
 import { getUsers, createUser, updateUser, deleteUser, updateProfile } from '../controllers/userController';
 import { getKaryawan, createKaryawan, deleteKaryawan, updateKaryawan } from '../controllers/karyawanController';
-import { getSummaryPresensi, getDetailPresensi, scanPresensi } from '../controllers/presensiController';
+import { getSummaryPresensi, getDetailPresensi, scanPresensi, submitPresensi } from '../controllers/presensiController';
 import { getServerTime, checkNik } from '../controllers/attendanceController';
 import { getDistributionCenters } from '../controllers/distributionCenterController';
 import { authenticateToken } from '../middleware/authMiddleware';
@@ -72,6 +72,7 @@ router.delete('/karyawan/:id', deleteKaryawan);
 // Presensi public routes (kiosk — no auth required)
 router.get('/presensi/time', getServerTime);
 router.get('/presensi/check-nik/:nik', checkNik);
+router.post('/presensi', submitPresensi);   // ← kiosk submit (no auth)
 
 // Presensi protected routes
 router.use('/presensi', authenticateToken);

@@ -208,11 +208,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return (
         <KaryawanProvider>
-        <div className="flex h-screen overflow-hidden bg-zinc-100 dark:bg-background">
+        <div className="flex h-screen overflow-hidden bg-background">
             <AutoLogout />
             {/* Desktop Sidebar */}
             <aside
-                className={`hidden print:hidden border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 md:flex md:flex-col h-full overflow-y-auto shrink-0 transition-[width] duration-300 ease-in-out ${isSidebarOpen ? 'w-64' : 'w-20'}`}
+                className={`hidden print:hidden border-r border-zinc-200 dark:border-zinc-800 bg-card md:flex md:flex-col h-full overflow-y-auto shrink-0 transition-[width] duration-300 ease-in-out ${isSidebarOpen ? 'w-64' : 'w-20'}`}
             >
                 <div className={`flex h-16 items-center border-b border-zinc-200 dark:border-zinc-800 font-semibold text-lg tracking-tight overflow-hidden ${isSidebarOpen ? 'justify-between px-4' : 'justify-center w-full'}`}>
                     <div className="flex items-center justify-center">
@@ -236,7 +236,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Main Content */}
             <div className="flex flex-1 flex-col">
                 {/* Top Navbar */}
-                <header className="sticky top-0 z-999 flex h-16 items-center gap-4 border-b border-zinc-200/60 dark:border-zinc-800/60 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-md px-4 sm:px-6 print:hidden">
+                <header className="sticky top-0 z-999 flex h-16 items-center gap-4 border-b border-zinc-200/60 dark:border-zinc-800/60 bg-card/80 backdrop-blur-md px-4 sm:px-6 print:hidden">
                     <div className="flex items-center gap-2">
                         {/* Mobile Menu Trigger */}
                         <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
@@ -333,7 +333,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto bg-zinc-100 dark:bg-background p-4 sm:p-6 lg:p-8">
+                <main className="flex-1 overflow-y-auto bg-background p-4 sm:p-6 lg:p-8">
                     <div className="mx-auto max-w-6xl">
                         {children}
                     </div>

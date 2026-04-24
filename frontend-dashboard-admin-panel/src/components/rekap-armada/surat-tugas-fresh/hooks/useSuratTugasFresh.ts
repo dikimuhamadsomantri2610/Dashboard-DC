@@ -77,6 +77,12 @@ export const useSuratTugasFresh = () => {
             groups[groupId].items.push(item);
         });
 
+        // Sort items dalam setiap grup secara ascending berdasarkan id,
+        // agar urutan cetak sesuai urutan input (AAC → BBN → CCA, bukan terbalik).
+        Object.values(groups).forEach(group => {
+            group.items.sort((a, b) => a.id - b.id);
+        });
+
         let result = Object.values(groups).sort((a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );

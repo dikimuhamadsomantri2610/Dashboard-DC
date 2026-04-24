@@ -37,18 +37,18 @@ export default function SuratTugasTable({
 
     return (
         <CardContent className="px-4 pb-4 sm:px-6 sm:pb-6 pt-0 sm:pt-2 rounded-b-xl">
-            <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-                <Table>
+            <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 overflow-x-auto">
+                <Table className="table-fixed w-full">
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-12 text-center">No.</TableHead>
-                            <TableHead>Daftar Toko</TableHead>
-                            <TableHead>No Armada</TableHead>
-                            <TableHead>Nama Driver</TableHead>
-                            <TableHead>Admin</TableHead>
-                            <TableHead>DC</TableHead>
-                            <TableHead>Tanggal Di Buat</TableHead>
-                            <TableHead className="text-center w-28">Aksi</TableHead>
+                            <TableHead className="w-[3%] text-center">No.</TableHead>
+                            <TableHead className="w-[28%]">Daftar Toko</TableHead>
+                            <TableHead className="w-[10%]">No Armada</TableHead>
+                            <TableHead className="w-[14%]">Nama Driver</TableHead>
+                            <TableHead className="w-[10%]">Admin</TableHead>
+                            <TableHead className="w-[6%]">DC</TableHead>
+                            <TableHead className="w-[14%]">Tanggal Di Buat</TableHead>
+                            <TableHead className="text-center w-[10%]">Aksi</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -71,7 +71,7 @@ export default function SuratTugasTable({
                                         <TableCell className="font-medium align-middle">
                                             <ul className="list-disc pl-4 space-y-1">
                                                 {group.items.map(toko => (
-                                                    <li key={toko.id}>{toko.nama_toko}</li>
+                                                    <li key={toko.id} className="truncate max-w-[220px]" title={toko.nama_toko}>{toko.nama_toko}</li>
                                                 ))}
                                             </ul>
                                         </TableCell>

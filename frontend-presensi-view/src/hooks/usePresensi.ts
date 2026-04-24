@@ -53,8 +53,8 @@ export function usePresensi() {
             await checkNik(nik);
             setStep('MENU');
         } catch (err: unknown) {
-            const e = err as { response?: { data?: { message?: string } } };
-            toast.error(e.response?.data?.message || 'NIK tidak terdaftar di database');
+            const e = err as { response?: { data?: { message?: string; error?: string } } };
+            toast.error(e.response?.data?.message || e.response?.data?.error || 'NIK tidak terdaftar di database');
         } finally {
             setIsLoading(false);
         }
@@ -78,12 +78,13 @@ export function usePresensi() {
                 'izin_keluar', 'izin_masuk',
             ].includes(jenis);
             const waktuStr = needsTime ? await fetchServerTime() : undefined;
-            await submitPresensi(nik, jenis, waktuStr, extraData);
-            toast.success(`Data "${jenis.replace(/_/g, ' ')}" berhasil disimpan!`);
+            const res = await submitPresensi(nik, jenis, waktuStr, extraData);
+            const msg = res.data?.message || `Data "${jenis.replace(/_/g, ' ')}" berhasil disimpan!`;
+            toast.success(msg);
             resetForm();
         } catch (err: unknown) {
-            const e = err as { response?: { data?: { message?: string } } };
-            toast.error(e.response?.data?.message || 'Terjadi kesalahan');
+            const e = err as { response?: { data?: { message?: string; error?: string } } };
+            toast.error(e.response?.data?.message || e.response?.data?.error || 'Terjadi kesalahan');
         } finally {
             setIsLoading(false);
         }

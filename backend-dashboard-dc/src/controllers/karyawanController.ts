@@ -17,14 +17,14 @@ export const getKaryawan = async (req: Request, res: Response) => {
 
 export const createKaryawan = async (req: Request, res: Response) => {
     try {
-        const { nama, nik, divisi } = req.body;
+        const { nama, nik, divisi, jadwalJamKerja } = req.body;
 
-        if (!nama || !nik || !divisi) {
+        if (!nama || !nik || !divisi || !jadwalJamKerja) {
             return res.status(400).json({ error: 'Semua field wajib diisi' });
         }
 
         const newKaryawan = await prisma.karyawan.create({
-            data: { nama, nik, divisi }
+            data: { nama, nik, divisi, jadwalJamKerja }
         });
 
         res.status(201).json(newKaryawan);
@@ -55,15 +55,15 @@ export const deleteKaryawan = async (req: Request, res: Response) => {
 export const updateKaryawan = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { nama, nik, divisi } = req.body;
+        const { nama, nik, divisi, jadwalJamKerja } = req.body;
 
-        if (!nama || !nik || !divisi) {
+        if (!nama || !nik || !divisi || !jadwalJamKerja) {
             return res.status(400).json({ error: 'Semua field wajib diisi' });
         }
 
         const updated = await prisma.karyawan.update({
             where: { id: Number(id) },
-            data: { nama, nik, divisi }
+            data: { nama, nik, divisi, jadwalJamKerja }
         });
 
         res.json(updated);

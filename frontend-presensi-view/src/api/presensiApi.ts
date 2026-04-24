@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const api = axios.create({ 
-    baseURL: '/api' 
+export const api = axios.create({
+    baseURL: '/api'
 });
 
 export async function checkNik(nik: string) {
@@ -13,6 +13,7 @@ export async function getServerTime(): Promise<string> {
     return res.data.serverTime as string;
 }
 
+// Submit semua jenis presensi ke backend (POST /presensi — public, no auth)
 export async function submitPresensi(
     nik: string,
     jenis: string,

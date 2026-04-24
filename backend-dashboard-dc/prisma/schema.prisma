@@ -82,11 +82,12 @@ model User {
 }
 
 model Karyawan {
-  id         Int      @id @default(autoincrement())
-  nama       String   @db.VarChar(100)
-  nik        String   @unique @db.VarChar(20)
-  divisi     String   @db.VarChar(50)
-  createdAt  DateTime @default(now())
+  id                Int      @id @default(autoincrement())
+  nama              String   @db.VarChar(100)
+  nik               String   @unique @db.VarChar(20)
+  divisi            String   @db.VarChar(50)
+  jadwalJamKerja    String   @db.VarChar(20)
+  createdAt         DateTime @default(now())
 }
 
 model Presensi {
@@ -94,6 +95,7 @@ model Presensi {
   nama               String   @db.VarChar(100)
   nik                String   @db.VarChar(20)
   divisi             String   @db.VarChar(50)
+  tanggal            DateTime @db.Date
   jamAbsenMasuk      String?  @db.VarChar(10)
   jamAbsenPulang     String?  @db.VarChar(10)
   jamIstirahatKeluar String?  @db.VarChar(10)

@@ -55,9 +55,9 @@ export const STYLE = `
 }
 
 .dark {
-  --login-bg-from:   #09090b;
-  --login-bg-via:    #111827;
-  --login-bg-to:     #052e16;
+  --login-bg-from:   #18181b;
+  --login-bg-via:    #1f2937;
+  --login-bg-to:     #064e3b;
   --login-orb1:      radial-gradient(circle, #84cc1615 0%, transparent 70%);
   --login-orb2:      radial-gradient(circle, #84cc1610 0%, transparent 70%);
   --login-orb3:      radial-gradient(circle, #84cc1608 0%, transparent 70%);
