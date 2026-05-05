@@ -36,9 +36,9 @@ export default function SuratTugasTable({
     };
 
     return (
-        <CardContent className="px-4 pb-4 sm:px-6 sm:pb-6 pt-0 rounded-b-xl">
+        <CardContent className="px-3 pb-4 sm:px-6 sm:pb-6 pt-0 rounded-b-xl">
             <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 overflow-x-auto">
-                <Table className="table-fixed w-full">
+                <Table className="min-w-[1000px] w-full">
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[3%] text-center">No.</TableHead>
@@ -107,11 +107,11 @@ export default function SuratTugasTable({
             </div>
 
             {!isLoading && groupedDataFiltered.length > 0 && (
-                <div className="mt-4 flex items-center justify-between px-2">
-                    <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                        Showing {(currentPage - 1) * perPage + 1} to {Math.min(currentPage * perPage, groupedDataFiltered.length)} of {groupedDataFiltered.length} entries
+                <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 px-1">
+                    <span className="text-sm text-zinc-500 dark:text-zinc-400 text-center sm:text-left">
+                        Showing {(currentPage - 1) * perPage + 1} – {Math.min(currentPage * perPage, groupedDataFiltered.length)} of {groupedDataFiltered.length} entries
                     </span>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 flex-wrap justify-center">
                         <Button variant="outline" size="sm" className="h-8" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>Prev</Button>
                         {Array.from({ length: totalPages }).map((_, idx) => {
                             const page = idx + 1;
@@ -122,7 +122,7 @@ export default function SuratTugasTable({
                                     </Button>
                                 );
                             } else if (page === currentPage - 2 || page === currentPage + 2) {
-                                return <span key={page} className="px-1 text-zinc-400">...</span>;
+                                return <span key={page} className="px-1 text-zinc-400">…</span>;
                             }
                             return null;
                         })}

@@ -36,7 +36,6 @@ import {
   Truck,
   ChevronRight,
   ChevronDown,
-  BarChart2,
   FileSignature,
   Store,
   Wrench,
@@ -127,7 +126,13 @@ const navigation: NavItem[] = [
       {
         name: "Report",
         href: "/rekap-armada/report",
-        icon: BarChart2,
+        icon: FileSignature,
+        iconColor: "text-zinc-900 dark:text-white",
+      },
+      {
+        name: "Report Fresh",
+        href: "/rekap-armada/report-fresh",
+        icon: Snowflake,
         iconColor: "text-zinc-900 dark:text-white",
       },
     ],
@@ -249,10 +254,10 @@ const NavLinks = ({
   };
 
   const linkClass = (active: boolean) =>
-    `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors overflow-hidden ${
+    `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 overflow-hidden ${
       active
-        ? "bg-primary/10 text-primary dark:bg-primary/20"
-        : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800/50"
+        ? "bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary"
+        : "text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800/60"
     }`;
 
   return (
@@ -286,7 +291,7 @@ const NavLinks = ({
               </div>
 
               {isSidebarOpen && isOpen && (
-                <div className="ml-4 mt-1 space-y-1 border-l border-zinc-200 dark:border-zinc-700 pl-3">
+                <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-zinc-200 dark:border-zinc-700 pl-3">
                   {item.children.map((child) => {
                     const ChildIcon = child.icon;
                     const childActive = location.pathname === child.href;
@@ -352,13 +357,13 @@ export default function DashboardLayout({
         <AutoLogout />
         {/* Desktop Sidebar */}
         <aside
-          className={`hidden print:hidden border-r border-zinc-200 dark:border-zinc-800 bg-card md:flex md:flex-col h-full overflow-y-auto shrink-0 transition-[width] duration-300 ease-in-out ${isSidebarOpen ? "w-64" : "w-20"}`}
+          className={`hidden print:hidden border-r border-zinc-200 dark:border-zinc-800/80 bg-card md:flex md:flex-col h-full overflow-y-auto shrink-0 transition-[width] duration-300 ease-in-out ${isSidebarOpen ? "w-64" : "w-[4.5rem]"}`}
         >
           <div
-            className={`flex h-16 items-center border-b border-zinc-200 dark:border-zinc-800 font-semibold text-lg tracking-tight overflow-hidden ${isSidebarOpen ? "justify-between px-4" : "justify-center w-full"}`}
+            className={`flex h-16 items-center border-b border-zinc-200 dark:border-zinc-800/80 font-semibold text-[0.8125rem] tracking-widest uppercase overflow-hidden ${isSidebarOpen ? "justify-between px-4" : "justify-center w-full"}`}
           >
             <div className="flex items-center justify-center">
-              <span className="flex items-center justify-center font-bold truncate">
+              <span className="flex items-center justify-center font-bold truncate text-sm tracking-widest uppercase">
                 {isSidebarOpen ? (
                   <>
                     <img
@@ -384,7 +389,7 @@ export default function DashboardLayout({
               </Button>
             )}
           </div>
-          <div className="flex-1 overflow-auto py-4 px-3">
+          <div className="flex-1 overflow-auto py-3 px-2.5">
             <NavLinks isSidebarOpen={isSidebarOpen} />
           </div>
         </aside>
@@ -392,7 +397,7 @@ export default function DashboardLayout({
         {/* Main Content */}
         <div className="flex flex-1 flex-col">
           {/* Top Navbar */}
-          <header className="sticky top-0 z-999 flex h-16 items-center gap-4 border-b border-zinc-200/60 dark:border-zinc-800/60 bg-card/80 backdrop-blur-md px-4 sm:px-6 print:hidden">
+          <header className="sticky top-0 z-50 flex h-14 items-center gap-4 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-card/90 backdrop-blur-sm px-4 sm:px-5 print:hidden">
             <div className="flex items-center gap-2">
               {/* Mobile Menu Trigger */}
               <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
@@ -506,8 +511,8 @@ export default function DashboardLayout({
           </header>
 
           {/* Page Content */}
-          <main className="flex-1 overflow-y-auto bg-background p-4 sm:p-6 lg:p-8">
-            <div className="mx-auto max-w-6xl">{children}</div>
+          <main className="flex-1 overflow-y-scroll bg-background p-4 sm:p-6">
+            <div className="mx-auto max-w-7xl">{children}</div>
           </main>
         </div>
       </div>

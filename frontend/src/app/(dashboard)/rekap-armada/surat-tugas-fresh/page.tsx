@@ -1,5 +1,5 @@
-import Component from '@/components/rekap-armada/surat-tugas-fresh/SuratTugasFreshPage';
+import SuratTugasFreshView from '@/views/rekap-armada/SuratTugasFresh';
 
 export default function Page() {
-    return <Component />;
+    return <SuratTugasFreshView />;
 }

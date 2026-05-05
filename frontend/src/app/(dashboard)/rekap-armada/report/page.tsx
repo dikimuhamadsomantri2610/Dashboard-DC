@@ -1,5 +1,5 @@
-import PageComponent from '@/views/rekap-armada/ReportArmada';
+import ReportRegulerView from '@/views/rekap-armada/ReportReguler';
 
 export default function Page() {
-    return <PageComponent />;
+    return <ReportRegulerView />;
 }
