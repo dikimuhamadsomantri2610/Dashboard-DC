@@ -4,6 +4,7 @@ import { getKoli, getRegister } from '../controllers/dataController';
 import { getToko, createToko, deleteToko, updateToko } from '../controllers/tokoController';
 import { getArmada, createArmada, deleteArmada, updateArmada } from '../controllers/armadaController';
 import { createSuratTugas, getSuratTugas, deleteSuratTugas, updateStatusSuratTugasGroup } from '../controllers/suratTugasController';
+import { createSuratTugasCheck, getPendingSuratTugasCheck, approveSuratTugasCheck, rejectSuratTugasCheck } from '../controllers/suratTugasCheckController';
 import { createSuratTugasFresh, getSuratTugasFresh, deleteSuratTugasFresh } from '../controllers/suratTugasFreshController';
 import { getUsers, createUser, updateUser, deleteUser, updateProfile } from '../controllers/userController';
 import { getKaryawan, createKaryawan, deleteKaryawan, updateKaryawan } from '../controllers/karyawanController';
@@ -25,15 +26,15 @@ router.use('/register', authenticateToken);
 router.get('/register', getRegister);
 
 // Toko routes
-router.use('/toko', authenticateToken);
 router.get('/toko', getToko);
+router.use('/toko', authenticateToken);
 router.post('/toko', createToko);
 router.delete('/toko/:id', deleteToko);
 router.put('/toko/:id', updateToko);
 
 // Armada routes
-router.use('/armada', authenticateToken);
 router.get('/armada', getArmada);
+router.use('/armada', authenticateToken);
 router.post('/armada', createArmada);
 router.delete('/armada/:id', deleteArmada);
 router.put('/armada/:id', updateArmada);
@@ -44,6 +45,13 @@ router.post('/surat-tugas', createSuratTugas);
 router.get('/surat-tugas', getSuratTugas);
 router.patch('/surat-tugas/group-status', updateStatusSuratTugasGroup);
 router.delete('/surat-tugas/:id', deleteSuratTugas);
+
+// Surat Tugas Check
+router.post('/surat-tugas-check', createSuratTugasCheck);
+router.use('/surat-tugas-check', authenticateToken);
+router.get('/surat-tugas-check/pending', getPendingSuratTugasCheck);
+router.post('/surat-tugas-check/approve', approveSuratTugasCheck);
+router.post('/surat-tugas-check/reject', rejectSuratTugasCheck);
 
 // Surat Tugas Fresh
 router.use('/surat-tugas-fresh', authenticateToken);

@@ -14,6 +14,7 @@ export interface SuratTugasApiItem {
     keterangan: string;
     kodeGembok: string;
     admin: string;
+    namaChecker: string;
     status: string;
     createdAt: string;
     vendor?: string;
@@ -26,6 +27,7 @@ export interface GroupedSuratTugas {
     dc: string;
     namaDriver: string;
     admin: string;
+    namaChecker: string;
     createdAt: string;
     vendor: string;
     status: string;

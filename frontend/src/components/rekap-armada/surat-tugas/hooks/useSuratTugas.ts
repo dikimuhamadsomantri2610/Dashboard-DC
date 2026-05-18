@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { fetchSuratTugas, deleteSuratTugas, updateStatusSuratTugasGroup } from '../services/surat-tugas.service';
+import { fetchSuratTugas, deleteSuratTugas, updateStatusSuratTugasGroup, fetchPendingSuratTugasCheck, approveSuratTugasCheckGroup, rejectSuratTugasCheckGroup } from '../services/surat-tugas.service';
 import { toast } from 'sonner';
 import { exportSuratTugasToExcel } from '../utils/surat-tugas.utils';
 import type { SuratTugasApiItem, GroupedSuratTugas } from '../types/surat-tugas.types';
 
 export const useSuratTugas = () => {
     const [data, setData] = useState<SuratTugasApiItem[]>([]);
+    const [pendingCheckData, setPendingCheckData] = useState<SuratTugasApiItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedGroupForPrint, setSelectedGroupForPrint] = useState<GroupedSuratTugas & { printIndex?: number } | null>(null);
     const [groupToConfirmPrint, setGroupToConfirmPrint] = useState<{ group: GroupedSuratTugas, index: number } | null>(null);
@@ -22,11 +23,15 @@ export const useSuratTugas = () => {
     const fetchData = useCallback(async () => {
         setIsLoading(true);
         try {
-            const resData = await fetchSuratTugas();
+            const [resData, resPending] = await Promise.all([
+                fetchSuratTugas(),
+                fetchPendingSuratTugasCheck()
+            ]);
             setData(resData);
+            setPendingCheckData(resPending);
         } catch (error) {
             console.error("Gagal mengambil data surat tugas:", error);
-            toast.error('Gagal', { description: 'Gagal mengambil surat tugas.' });
+            toast.error('Gagal', { description: 'Gagal mengambil data.' });
         } finally {
             setIsLoading(false);
         }
@@ -49,13 +54,19 @@ export const useSuratTugas = () => {
         }
     };
 
-    const handleApproveGroup = async (group: GroupedSuratTugas) => {
+    const handleApproveGroup = async (group: GroupedSuratTugas, details?: {id: number, materai: string, loadNumber: string, keterangan: string}[]) => {
         try {
             const ids = group.items.map(i => i.id);
-            await updateStatusSuratTugasGroup(ids, 'approved');
-            setData(prev => prev.map(item =>
-                ids.includes(item.id) ? { ...item, status: 'approved' } : item
-            ));
+            if (group.status === 'Pending' || group.status === 'pending') {
+                if (!details) throw new Error("Details required for pending approval");
+                await approveSuratTugasCheckGroup(details);
+                await fetchData(); // Refresh data to move it to main table
+            } else {
+                await updateStatusSuratTugasGroup(ids, 'approved');
+                setData(prev => prev.map(item =>
+                    ids.includes(item.id) ? { ...item, status: 'approved' } : item
+                ));
+            }
             toast.success('Disetujui', { description: `Surat tugas armada ${group.noArmada} telah disetujui.` });
         } catch (error) {
             console.error("Gagal menyetujui:", error);
@@ -66,10 +77,15 @@ export const useSuratTugas = () => {
     const handleRejectGroup = async (group: GroupedSuratTugas) => {
         try {
             const ids = group.items.map(i => i.id);
-            await updateStatusSuratTugasGroup(ids, 'rejected');
-            setData(prev => prev.map(item =>
-                ids.includes(item.id) ? { ...item, status: 'rejected' } : item
-            ));
+            if (group.status === 'Pending' || group.status === 'pending') {
+                await rejectSuratTugasCheckGroup(ids);
+                await fetchData(); // Refresh data
+            } else {
+                await updateStatusSuratTugasGroup(ids, 'rejected');
+                setData(prev => prev.map(item =>
+                    ids.includes(item.id) ? { ...item, status: 'rejected' } : item
+                ));
+            }
             toast.error('Ditolak', { description: `Surat tugas armada ${group.noArmada} telah ditolak.` });
         } catch (error) {
             console.error("Gagal menolak:", error);
@@ -79,7 +95,7 @@ export const useSuratTugas = () => {
 
     const handleExportExcel = () => exportSuratTugasToExcel(data);
 
-    // Build all groups (including all statuses) for pending card
+    // Build all groups for main table (from SuratTugas)
     const allGroups = useMemo(() => {
         const groups: Record<string, GroupedSuratTugas> = {};
         data.forEach(item => {
@@ -93,9 +109,10 @@ export const useSuratTugas = () => {
                     dc: item.dc || '-',
                     namaDriver: item.namaDriver,
                     admin: item.admin,
+                    namaChecker: item.namaChecker,
                     createdAt: item.createdAt,
                     vendor: item.vendor || item.noArmada,
-                    status: item.status || 'pending',
+                    status: item.status || 'approved',
                     items: []
                 };
             }
@@ -106,14 +123,37 @@ export const useSuratTugas = () => {
         );
     }, [data]);
 
-    const pendingGroups = useMemo(() =>
-        allGroups.filter(g => g.status === 'pending'),
-        [allGroups]
-    );
+    // Build pending groups (from SuratTugasCheck)
+    const pendingGroups = useMemo(() => {
+        const groups: Record<string, GroupedSuratTugas> = {};
+        pendingCheckData.forEach(item => {
+            const timeKey = new Date(item.createdAt).toISOString().slice(0, 16);
+            const groupId = `${item.noArmada}-${item.namaDriver}-${timeKey}`;
+
+            if (!groups[groupId]) {
+                groups[groupId] = {
+                    groupId,
+                    noArmada: item.noArmada,
+                    dc: item.dc || '-',
+                    namaDriver: item.namaDriver,
+                    admin: item.admin || 'System',
+                    namaChecker: item.namaChecker,
+                    createdAt: item.createdAt,
+                    vendor: item.vendor || item.noArmada,
+                    status: 'pending',
+                    items: []
+                };
+            }
+            groups[groupId].items.push(item);
+        });
+        return Object.values(groups).sort((a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+    }, [pendingCheckData]);
 
     const groupedDataFiltered = useMemo(() => {
-        // Only show approved and rejected in the main table
-        let result = allGroups.filter(g => g.status !== 'pending');
+        // Only show from main table
+        let result = [...allGroups];
 
         if (startDate) result = result.filter(g => new Date(g.createdAt).toISOString().slice(0, 10) >= startDate);
         if (endDate) result = result.filter(g => new Date(g.createdAt).toISOString().slice(0, 10) <= endDate);
@@ -123,7 +163,7 @@ export const useSuratTugas = () => {
             result = result.filter(g =>
                 g.noArmada.toLowerCase().includes(q) ||
                 g.namaDriver.toLowerCase().includes(q) ||
-                g.admin.toLowerCase().includes(q) ||
+                g.namaChecker.toLowerCase().includes(q) ||
                 g.dc.toLowerCase().includes(q) ||
                 g.items.some(item => item.nama_toko.toLowerCase().includes(q))
             );

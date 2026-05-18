@@ -31,3 +31,18 @@ export const updateStatusSuratTugasGroup = async (ids: number[], status: 'approv
     return response.data;
 };
 
+export const fetchPendingSuratTugasCheck = async () => {
+    const response = await api.get('/surat-tugas-check/pending');
+    return response.data;
+};
+
+export const approveSuratTugasCheckGroup = async (items: {id: number, materai: string, loadNumber: string, keterangan: string}[]) => {
+    const response = await api.post('/surat-tugas-check/approve', { items });
+    return response.data;
+};
+
+export const rejectSuratTugasCheckGroup = async (ids: number[]) => {
+    const response = await api.post('/surat-tugas-check/reject', { ids });
+    return response.data;
+};
+
