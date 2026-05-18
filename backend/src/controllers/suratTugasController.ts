@@ -28,7 +28,8 @@ export const createSuratTugas = async (req: AuthRequest, res: Response) => {
             kodeGembok: entry.kodeGembok || '',
             keterangan: entry.keterangan || 'R',
             admin: adminName,
-            tanggalKirim: kirimDate
+            tanggalKirim: kirimDate,
+            status: 'pending',
         }));
 
         await prisma.suratTugas.createMany({ data: dataToInsert });
@@ -86,5 +87,29 @@ export const deleteSuratTugas = async (req: AuthRequest, res: Response) => {
     } catch (error) {
         console.error('Error deleting Surat Tugas:', error);
         res.status(500).json({ error: 'Gagal menghapus data Surat Tugas' });
+    }
+};
+
+export const updateStatusSuratTugasGroup = async (req: AuthRequest, res: Response) => {
+    try {
+        const { ids, status } = req.body;
+
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({ error: 'IDs wajib diisi' });
+        }
+
+        if (!['approved', 'rejected'].includes(status)) {
+            return res.status(400).json({ error: 'Status tidak valid. Gunakan: approved / rejected' });
+        }
+
+        await prisma.suratTugas.updateMany({
+            where: { id: { in: ids.map(Number) } },
+            data: { status },
+        });
+
+        res.json({ message: `Status berhasil diubah ke ${status}`, count: ids.length });
+    } catch (error) {
+        console.error('Error updating status Surat Tugas:', error);
+        res.status(500).json({ error: 'Gagal mengubah status Surat Tugas' });
     }
 };

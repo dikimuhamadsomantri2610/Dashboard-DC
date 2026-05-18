@@ -31,6 +31,7 @@ model SuratTugas {
   kodeGembok      String   @db.VarChar(50)
   keterangan      String   @default("R") @db.VarChar(5)
   admin           String   @default("System") @db.VarChar(50)
+  status          String   @default("pending") @db.VarChar(10)
   createdAt       DateTime @default(now())
   tanggalKirim    DateTime @default(now())
 }

@@ -1,0 +1,336 @@
+.st-form-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.st-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.st-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+}
+
+.st-header-content {
+    flex: 1;
+}
+
+.st-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 8px 0;
+}
+
+.st-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.st-form {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.st-form-group {
+    margin-bottom: 24px;
+}
+
+.st-form-group:last-of-type {
+    margin-bottom: 32px;
+}
+
+.st-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.st-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.st-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background-color: #f8f9ff;
+}
+
+.st-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Checker input row */
+.st-checker-input-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.st-input-small {
+    flex: 0.4;
+    margin-bottom: 0;
+}
+
+.st-select {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background-color: white;
+    cursor: pointer;
+}
+
+.st-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background-color: #f8f9ff;
+}
+
+.st-btn-add {
+    flex: 0 0 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.st-btn-add:hover {
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+
+.st-btn-add:active {
+    transform: translateY(0);
+}
+
+/* Checkers list */
+.st-checkers-list {
+    margin-top: 16px;
+    padding: 16px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.st-checker-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.st-checker-item:last-child {
+    margin-bottom: 0;
+}
+
+.st-checker-content {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex: 1;
+}
+
+.st-checker-toko {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: #e0e7ff;
+    color: #667eea;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.st-checker-name {
+    font-size: 14px;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.st-btn-remove {
+    flex: 0 0 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.st-btn-remove:hover {
+    background-color: #fecaca;
+}
+
+.st-form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.st-btn-reset,
+.st-btn-submit {
+    flex: 1;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.st-btn-reset {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    border: 2px solid #e5e7eb;
+}
+
+.st-btn-reset:hover:not(:disabled) {
+    background-color: #e5e7eb;
+    border-color: #d1d5db;
+}
+
+.st-btn-submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.st-btn-submit:hover:not(:disabled) {
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+
+.st-btn-reset:disabled,
+.st-btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.st-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .st-form-container {
+        padding: 12px;
+    }
+
+    .st-header {
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .st-form {
+        padding: 20px;
+    }
+
+    .st-title {
+        font-size: 24px;
+    }
+
+    .st-subtitle {
+        font-size: 13px;
+    }
+
+    .st-form-buttons {
+        flex-direction: column;
+    }
+
+    .st-checker-input-row {
+        flex-direction: column;
+    }
+
+    .st-input-small,
+    .st-select,
+    .st-btn-add {
+        width: 100%;
+        flex: 1;
+    }
+
+    .st-checker-content {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

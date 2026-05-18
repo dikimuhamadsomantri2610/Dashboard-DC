@@ -33,7 +33,6 @@ export default function SuratTugasFreshPage() {
         perPage,
         setPerPage,
         executeDeleteGroup,
-        handleExportExcel,
         groupedDataFiltered,
         currentData,
         totalPages,
@@ -72,7 +71,6 @@ export default function SuratTugasFreshPage() {
                         endDate={endDate} setEndDate={setEndDate}
                         dcFilter={dcFilter} setDcFilter={setDcFilter}
                         resetDateFilter={resetDateFilter}
-                        handleExportExcel={handleExportExcel}
                         perPage={perPage} setPerPage={setPerPage}
                         searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                     />

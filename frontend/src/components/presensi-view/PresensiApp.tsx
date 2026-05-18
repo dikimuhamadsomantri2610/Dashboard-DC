@@ -5,7 +5,6 @@ import { ClipboardList } from 'lucide-react';
 import { Toaster } from 'sonner';
 import { usePresensi } from '@/hooks/usePresensi';
 import PageBackground from './PageBackground';
-import ThemeToggle from './ThemeToggle';
 import NikStep from './NikStep';
 import MenuStep from './MenuStep';
 import AbsenStep from './AbsenStep';
@@ -16,7 +15,6 @@ import KuotaStep from './KuotaStep';
 import CutiStep from './CutiStep';
 
 export default function PresensiApp() {
-    const [dark, setDark] = useState(false);
     const {
         step, setStep,
         nik, setNik,
@@ -39,9 +37,8 @@ export default function PresensiApp() {
         'Silakan isi form berikut';
 
     return (
-        <div className={`presensi-root${dark ? ' presensi-dark' : ''}`}>
+        <div className="presensi-root">
             <Toaster richColors />
-            <ThemeToggle dark={dark} onToggle={() => setDark(d => !d)} />
 
             <div className="presensi-page-wrap">
                 <PageBackground />

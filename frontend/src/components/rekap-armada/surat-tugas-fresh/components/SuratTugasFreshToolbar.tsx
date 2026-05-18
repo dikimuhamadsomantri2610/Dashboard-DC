@@ -2,7 +2,7 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { CardHeader } from '@/components/ui/card';
-import { Download, X, Search } from 'lucide-react';
+import { X, Search } from 'lucide-react';
 
 interface SuratTugasFreshToolbarProps {
     startDate: string;
@@ -12,7 +12,6 @@ interface SuratTugasFreshToolbarProps {
     dcFilter: string;
     setDcFilter: (val: string) => void;
     resetDateFilter: () => void;
-    handleExportExcel: () => void;
     perPage: number;
     setPerPage: (val: number) => void;
     searchQuery: string;
@@ -23,7 +22,7 @@ export default function SuratTugasFreshToolbar({
     startDate, setStartDate,
     endDate, setEndDate,
     dcFilter, setDcFilter,
-    resetDateFilter, handleExportExcel,
+    resetDateFilter,
     perPage, setPerPage,
     searchQuery, setSearchQuery,
 }: SuratTugasFreshToolbarProps) {
@@ -91,14 +90,6 @@ export default function SuratTugasFreshToolbar({
                                 <option value={100}>100</option>
                             </select>
                         </div>
-                        <Button
-                            variant="outline"
-                            onClick={handleExportExcel}
-                            className="flex items-center gap-2 h-9 text-sm"
-                        >
-                            <Download className="h-4 w-4" />
-                            <span>Export Excel</span>
-                        </Button>
                     </div>
                 </div>
 

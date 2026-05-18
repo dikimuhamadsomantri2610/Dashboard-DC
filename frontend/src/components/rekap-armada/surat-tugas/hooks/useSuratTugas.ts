@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { fetchSuratTugas, deleteSuratTugas } from '../services/surat-tugas.service';
+import { fetchSuratTugas, deleteSuratTugas, updateStatusSuratTugasGroup } from '../services/surat-tugas.service';
 import { toast } from 'sonner';
 import { exportSuratTugasToExcel } from '../utils/surat-tugas.utils';
 import type { SuratTugasApiItem, GroupedSuratTugas } from '../types/surat-tugas.types';
@@ -49,9 +49,38 @@ export const useSuratTugas = () => {
         }
     };
 
+    const handleApproveGroup = async (group: GroupedSuratTugas) => {
+        try {
+            const ids = group.items.map(i => i.id);
+            await updateStatusSuratTugasGroup(ids, 'approved');
+            setData(prev => prev.map(item =>
+                ids.includes(item.id) ? { ...item, status: 'approved' } : item
+            ));
+            toast.success('Disetujui', { description: `Surat tugas armada ${group.noArmada} telah disetujui.` });
+        } catch (error) {
+            console.error("Gagal menyetujui:", error);
+            toast.error('Gagal', { description: 'Gagal menyetujui surat tugas.' });
+        }
+    };
+
+    const handleRejectGroup = async (group: GroupedSuratTugas) => {
+        try {
+            const ids = group.items.map(i => i.id);
+            await updateStatusSuratTugasGroup(ids, 'rejected');
+            setData(prev => prev.map(item =>
+                ids.includes(item.id) ? { ...item, status: 'rejected' } : item
+            ));
+            toast.error('Ditolak', { description: `Surat tugas armada ${group.noArmada} telah ditolak.` });
+        } catch (error) {
+            console.error("Gagal menolak:", error);
+            toast.error('Gagal', { description: 'Gagal menolak surat tugas.' });
+        }
+    };
+
     const handleExportExcel = () => exportSuratTugasToExcel(data);
 
-    const groupedDataFiltered = useMemo(() => {
+    // Build all groups (including all statuses) for pending card
+    const allGroups = useMemo(() => {
         const groups: Record<string, GroupedSuratTugas> = {};
         data.forEach(item => {
             const timeKey = new Date(item.createdAt).toISOString().slice(0, 16);
@@ -66,15 +95,25 @@ export const useSuratTugas = () => {
                     admin: item.admin,
                     createdAt: item.createdAt,
                     vendor: item.vendor || item.noArmada,
+                    status: item.status || 'pending',
                     items: []
                 };
             }
             groups[groupId].items.push(item);
         });
-
-        let result = Object.values(groups).sort((a, b) =>
+        return Object.values(groups).sort((a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
+    }, [data]);
+
+    const pendingGroups = useMemo(() =>
+        allGroups.filter(g => g.status === 'pending'),
+        [allGroups]
+    );
+
+    const groupedDataFiltered = useMemo(() => {
+        // Only show approved and rejected in the main table
+        let result = allGroups.filter(g => g.status !== 'pending');
 
         if (startDate) result = result.filter(g => new Date(g.createdAt).toISOString().slice(0, 10) >= startDate);
         if (endDate) result = result.filter(g => new Date(g.createdAt).toISOString().slice(0, 10) <= endDate);
@@ -91,7 +130,7 @@ export const useSuratTugas = () => {
         }
 
         return result;
-    }, [data, startDate, endDate, dcFilter, searchQuery]);
+    }, [allGroups, startDate, endDate, dcFilter, searchQuery]);
 
     const totalPages = Math.max(1, Math.ceil(groupedDataFiltered.length / perPage));
     const currentData = groupedDataFiltered.slice((currentPage - 1) * perPage, currentPage * perPage);
@@ -107,6 +146,8 @@ export const useSuratTugas = () => {
         groupToDelete, setGroupToDelete,
         currentPage, setCurrentPage, perPage, setPerPage,
         executeDeleteGroup, handleExportExcel,
+        handleApproveGroup, handleRejectGroup,
+        pendingGroups,
         groupedDataFiltered, currentData, totalPages, resetDateFilter,
     };
 };

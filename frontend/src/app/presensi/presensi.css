@@ -14,9 +14,9 @@
 
 /* ── CSS Variables (Light Mode) ── */
 .presensi-root {
-  --presensi-bg-from:   #0c4a6e;
-  --presensi-bg-via:    #1e3a8a;
-  --presensi-bg-to:     #1e1b4b;
+  --presensi-bg-from:   #daa520;
+  --presensi-bg-via:    #b8860b;
+  --presensi-bg-to:     #000000;
   --presensi-orb1: radial-gradient(circle, #38bdf840 0%, transparent 70%);
   --presensi-orb2: radial-gradient(circle, #60a5fa30 0%, transparent 70%);
   --presensi-orb3: radial-gradient(circle, #3b82f618 0%, transparent 70%);
@@ -35,36 +35,13 @@
   --presensi-btn-text:        #ffffff;
 }
 
-/* ── CSS Variables (Dark Mode) ── */
-.presensi-root.presensi-dark {
-  --presensi-bg-from:   #09090b;
-  --presensi-bg-via:    #111827;
-  --presensi-bg-to:     #052e16;
-  --presensi-orb1: radial-gradient(circle, #84cc1615 0%, transparent 70%);
-  --presensi-orb2: radial-gradient(circle, #84cc1610 0%, transparent 70%);
-  --presensi-orb3: radial-gradient(circle, #84cc1608 0%, transparent 70%);
-  --presensi-icon-color:      #84cc16;
-  --presensi-grid-color:      #84cc16;
-  --presensi-accent:          #84cc16;
-  --presensi-accent-glow:     #84cc1640;
-  --presensi-accent-btn-glow: #84cc1635;
-  --presensi-card-bg:         rgba(9,9,11,0.6);
-  --presensi-card-border:     rgba(132,204,22,0.10);
-  --presensi-text:            #f4f4f5;
-  --presensi-desc:            #a1a1aa;
-  --presensi-input-bg:        rgba(255,255,255,0.07);
-  --presensi-input-border:    rgba(255,255,255,0.10);
-  --presensi-input-text:      #f4f4f5;
-  --presensi-btn-text:        #09090b;
-}
-
 /* ── Reset & Base ── */
 .presensi-root * {
   box-sizing: border-box;
 }
 
 .presensi-root {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Poppins', system-ui, sans-serif;
 }
 
 /* ── Layout ── */

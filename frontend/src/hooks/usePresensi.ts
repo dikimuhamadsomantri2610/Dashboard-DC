@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import type { Step } from '@/types/presensi';
-import { checkNik, getServerTime, submitPresensi } from '@/api/presensiApi';
+import { checkNik, getServerTime, submitPresensi } from '@/components/presensi-view/services/presensi-view.service';
 
 export function usePresensi() {
     const [step, setStep] = useState<Step>('NIK');

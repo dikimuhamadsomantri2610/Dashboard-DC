@@ -2,7 +2,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { fetchSuratTugasFresh, deleteSuratTugasFresh, fetchDistributionCenters } from '../services/surat-tugas-fresh.service';
 import { toast } from 'sonner';
-import { exportSuratTugasToExcel } from '../utils/surat-tugas-fresh.utils';
 import type { SuratTugasFreshApiItem, GroupedSuratTugasFresh } from '../types/surat-tugas-fresh.types';
 import type { DistributionCenterData } from '../print/SuratTugasFreshPaperA4';
 
@@ -54,8 +53,6 @@ export const useSuratTugasFresh = () => {
             toast.error('Gagal', { description: 'Gagal menghapus surat tugas.' });
         }
     };
-
-    const handleExportExcel = () => exportSuratTugasToExcel(data);
 
     const groupedDataFiltered = useMemo(() => {
         const groups: Record<string, GroupedSuratTugasFresh> = {};
@@ -117,7 +114,7 @@ export const useSuratTugasFresh = () => {
         searchQuery, setSearchQuery,
         groupToDelete, setGroupToDelete,
         currentPage, setCurrentPage, perPage, setPerPage,
-        executeDeleteGroup, handleExportExcel,
+        executeDeleteGroup,
         groupedDataFiltered, currentData, totalPages, resetDateFilter,
     };
 };

@@ -6,7 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 import { fetchUsers } from '@/components/data-user/services/data-user.service';
 import { fetchArmada } from '@/components/rekap-armada/update-armada/services/armada.service';
-import { fetchPresensiSummary } from '@/components/presensi/services/presensi.service';
+import { fetchPresensiSummary } from '@/components/presensi-admin-panel/services/presensi.service';
 
 export default function Dashboard() {
     const [stats, setStats] = useState({

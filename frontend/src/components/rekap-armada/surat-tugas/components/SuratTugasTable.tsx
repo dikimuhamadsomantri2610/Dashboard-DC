@@ -42,11 +42,12 @@ export default function SuratTugasTable({
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[3%] text-center">No.</TableHead>
-                            <TableHead className="w-[28%]">Daftar Toko</TableHead>
+                            <TableHead className="w-[25%]">Daftar Toko</TableHead>
                             <TableHead className="w-[10%]">No Armada</TableHead>
-                            <TableHead className="w-[14%]">Nama Driver</TableHead>
+                            <TableHead className="w-[13%]">Nama Driver</TableHead>
                             <TableHead className="w-[10%]">Admin</TableHead>
                             <TableHead className="w-[6%]">DC</TableHead>
+                            <TableHead className="w-[9%] text-center">Status</TableHead>
                             <TableHead className="w-[14%]">Tanggal Di Buat</TableHead>
                             <TableHead className="text-center w-[10%]">Aksi</TableHead>
                         </TableRow>
@@ -79,6 +80,24 @@ export default function SuratTugasTable({
                                         <TableCell className="align-middle">{group.namaDriver}</TableCell>
                                         <TableCell className="align-middle">{group.admin}</TableCell>
                                         <TableCell className="align-middle font-semibold text-zinc-700 dark:text-zinc-300">{group.dc}</TableCell>
+                                        <TableCell className="align-middle text-center">
+                                            {group.status === 'approved' ? (
+                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-xs font-medium border border-green-200 dark:border-green-700/50">
+                                                    <span className="h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
+                                                    Disetujui
+                                                </span>
+                                            ) : group.status === 'rejected' ? (
+                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 text-xs font-medium border border-red-200 dark:border-red-700/50">
+                                                    <span className="h-1.5 w-1.5 rounded-full bg-red-500 shrink-0" />
+                                                    Ditolak
+                                                </span>
+                                            ) : (
+                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-xs font-medium border border-amber-200 dark:border-amber-700/50">
+                                                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
+                                                    Pending
+                                                </span>
+                                            )}
+                                        </TableCell>
                                         <TableCell className="align-middle">
                                             {new Date(group.createdAt).toLocaleString('id-ID', {
                                                 day: '2-digit', month: '2-digit', year: 'numeric',

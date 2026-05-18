@@ -8,6 +8,7 @@ import SuratTugasToolbar from './components/SuratTugasToolbar';
 import SuratTugasTable from './components/SuratTugasTable';
 import SuratTugasDialogs from './components/SuratTugasDialogs';
 import SuratTugasPaperA5 from './print/SuratTugasPaperA5';
+import SuratTugasPendingCard from './components/SuratTugasPendingCard';
 
 export default function SuratTugasPage() {
     const router = useRouter();
@@ -24,6 +25,9 @@ export default function SuratTugasPage() {
         perPage, setPerPage,
         executeDeleteGroup,
         handleExportExcel,
+        handleApproveGroup,
+        handleRejectGroup,
+        pendingGroups,
         groupedDataFiltered,
         currentData,
         totalPages,
@@ -53,6 +57,13 @@ export default function SuratTugasPage() {
                         </Button>
                     </div>
                 </div>
+
+                {/* Pending approval card — only shows when there are pending items */}
+                <SuratTugasPendingCard
+                    pendingGroups={pendingGroups}
+                    onApprove={handleApproveGroup}
+                    onReject={handleRejectGroup}
+                />
 
                 <Card>
                     <SuratTugasToolbar

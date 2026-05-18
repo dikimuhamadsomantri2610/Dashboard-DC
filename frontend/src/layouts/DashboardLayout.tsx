@@ -357,7 +357,7 @@ export default function DashboardLayout({
         <AutoLogout />
         {/* Desktop Sidebar */}
         <aside
-          className={`hidden print:hidden border-r border-zinc-200 dark:border-zinc-800/80 bg-card md:flex md:flex-col h-full overflow-y-auto shrink-0 transition-[width] duration-300 ease-in-out ${isSidebarOpen ? "w-64" : "w-[4.5rem]"}`}
+          className={`hidden print:hidden border-r border-zinc-200 dark:border-zinc-800/80 bg-card md:flex md:flex-col h-full overflow-y-auto shrink-0 transition-[width] duration-300 ease-in-out ${isSidebarOpen ? "w-64" : "w-18"}`}
         >
           <div
             className={`flex h-16 items-center border-b border-zinc-200 dark:border-zinc-800/80 font-semibold text-[0.8125rem] tracking-widest uppercase overflow-hidden ${isSidebarOpen ? "justify-between px-4" : "justify-center w-full"}`}

@@ -3,7 +3,7 @@ import { login } from '../controllers/authController';
 import { getKoli, getRegister } from '../controllers/dataController';
 import { getToko, createToko, deleteToko, updateToko } from '../controllers/tokoController';
 import { getArmada, createArmada, deleteArmada, updateArmada } from '../controllers/armadaController';
-import { createSuratTugas, getSuratTugas, deleteSuratTugas } from '../controllers/suratTugasController';
+import { createSuratTugas, getSuratTugas, deleteSuratTugas, updateStatusSuratTugasGroup } from '../controllers/suratTugasController';
 import { createSuratTugasFresh, getSuratTugasFresh, deleteSuratTugasFresh } from '../controllers/suratTugasFreshController';
 import { getUsers, createUser, updateUser, deleteUser, updateProfile } from '../controllers/userController';
 import { getKaryawan, createKaryawan, deleteKaryawan, updateKaryawan } from '../controllers/karyawanController';
@@ -42,6 +42,7 @@ router.put('/armada/:id', updateArmada);
 router.use('/surat-tugas', authenticateToken);
 router.post('/surat-tugas', createSuratTugas);
 router.get('/surat-tugas', getSuratTugas);
+router.patch('/surat-tugas/group-status', updateStatusSuratTugasGroup);
 router.delete('/surat-tugas/:id', deleteSuratTugas);
 
 // Surat Tugas Fresh
